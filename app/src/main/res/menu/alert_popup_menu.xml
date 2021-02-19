@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/timeOfEvent"
+        android:title="At Time of event" />
+    <item android:id="@+id/fiveMinsBeforeEvent"
+        android:title="Five minutes before event" />
+    <item android:id="@+id/halfHourBeforeEvent"
+        android:title="30 minutes before event" />
+    <item android:id="@+id/hourBeforeEvent"
+        android:title="One hour before event" />
+    <item android:id="@+id/oneDayBeforeEvent"
+        android:title="One day before event" />
+    <item android:id="@+id/oneWeekBeforeEvent"
+        android:title="One week before event" />
+</menu>

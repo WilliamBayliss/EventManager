@@ -2,6 +2,7 @@ package com.williambayliss.eventmanager;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.room.Room;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,10 +14,17 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton newEventButton;
     CalendarView calendarView;
+    public static EventTemplateDatabase eventTemplateDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        eventTemplateDatabase = Room.databaseBuilder(getApplicationContext(), EventTemplateDatabase.class, "Event Templates")
+                .allowMainThreadQueries()
+                .build();
+
         calendarView = findViewById(R.id.calendar_view);
         newEventButton = findViewById(R.id.new_event_button);
 
