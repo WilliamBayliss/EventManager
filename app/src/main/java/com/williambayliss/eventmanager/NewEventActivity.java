@@ -141,6 +141,8 @@ public class NewEventActivity extends AppCompatActivity {
                 eventLocation = eventLocationEditText.getText().toString();
                 saveTemplateToggleState = saveTemplateToggle.isChecked();
                 eventDate = setDateTextView.getText().toString();
+                startTime = startTimeTextView.getText().toString();
+                endTime = endTimeTextView.getText().toString();
                 if (saveTemplateToggleState.equals(true)) {
                     saveEventTemplate();
                 }
