@@ -44,11 +44,13 @@ public class NewEventActivity extends AppCompatActivity {
 
     private String alertType;
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.new_event_activity);
         eventTitleEditText = findViewById(R.id.event_title);
         eventLocationEditText = findViewById(R.id.event_location);
         setDateButton = findViewById(R.id.date_button);
+        setDateTextView = findViewById(R.id.set_date_text_view);
         startTimeButton = findViewById(R.id.start_time_button);
         startTimeTextView = findViewById(R.id.start_time_text_view);
         endTimeButton = findViewById(R.id.end_time_button);
@@ -67,7 +69,7 @@ public class NewEventActivity extends AppCompatActivity {
                 int day = currentDate.get(Calendar.DAY_OF_MONTH);
 
                 DatePickerDialog datePicker;
-                datePicker = new DatePickerDialog(getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
+                datePicker = new DatePickerDialog(NewEventActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
                         selectedMonth = selectedMonth + 1;
@@ -87,7 +89,7 @@ public class NewEventActivity extends AppCompatActivity {
                 int minute = currentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(getApplicationContext(), new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(NewEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         startTimeTextView.setText( selectedHour + ":" + selectedMinute);
@@ -107,7 +109,7 @@ public class NewEventActivity extends AppCompatActivity {
                 int minute = currentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(getApplicationContext(), new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(NewEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
                         endTimeTextView.setText( selectedHour + ":" + selectedMinute);
@@ -146,6 +148,7 @@ public class NewEventActivity extends AppCompatActivity {
                 if (saveTemplateToggleState.equals(true)) {
                     saveEventTemplate();
                 }
+                finish();
             }
         });
     }
