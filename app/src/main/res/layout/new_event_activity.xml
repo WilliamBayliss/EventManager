@@ -21,6 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingRight="40dp"
             android:layout_weight="0"
             android:text="Title: "
             android:textSize="20dp"/>
