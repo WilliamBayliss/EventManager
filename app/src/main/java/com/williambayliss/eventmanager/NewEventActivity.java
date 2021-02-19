@@ -1,6 +1,7 @@
 package com.williambayliss.eventmanager;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -11,6 +12,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -48,7 +50,9 @@ public class NewEventActivity extends AppCompatActivity {
         eventLocationEditText = findViewById(R.id.event_location);
         setDateButton = findViewById(R.id.date_button);
         startTimeButton = findViewById(R.id.start_time_button);
+        startTimeTextView = findViewById(R.id.start_time_text_view);
         endTimeButton = findViewById(R.id.end_time_button);
+        endTimeTextView = findViewById(R.id.end_time_text_view);
         alertTypeButton = findViewById(R.id.alert_type_button);
         saveTemplateToggle = findViewById(R.id.save_template_button);
         addToCalendarButton = findViewById(R.id.add_to_calendar_button);
@@ -78,14 +82,39 @@ public class NewEventActivity extends AppCompatActivity {
         startTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                TODO
+                Calendar currentTime = Calendar.getInstance();
+                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = currentTime.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog;
+                timePickerDialog = new TimePickerDialog(getApplicationContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        startTimeTextView.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);
+                timePickerDialog.setTitle("Select Start Time");
+                timePickerDialog.show();
             }
         });
 
         endTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                TODO
+//
+                Calendar currentTime = Calendar.getInstance();
+                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+                int minute = currentTime.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog;
+                timePickerDialog = new TimePickerDialog(getApplicationContext(), new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+                        endTimeTextView.setText( selectedHour + ":" + selectedMinute);
+                    }
+                }, hour, minute, true);
+                timePickerDialog.setTitle("Select End Time");
+                timePickerDialog.show();
             }
         });
 
@@ -111,7 +140,7 @@ public class NewEventActivity extends AppCompatActivity {
                 eventTitle = eventTitleEditText.getText().toString();
                 eventLocation = eventLocationEditText.getText().toString();
                 saveTemplateToggleState = saveTemplateToggle.isChecked();
-
+                eventDate = setDateTextView.getText().toString();
                 if (saveTemplateToggleState.equals(true)) {
                     saveEventTemplate();
                 }
