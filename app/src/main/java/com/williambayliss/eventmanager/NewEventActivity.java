@@ -1,27 +1,37 @@
 package com.williambayliss.eventmanager;
 
+import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.util.Calendar;
+
 public class NewEventActivity extends AppCompatActivity {
-    EditText eventTitleEditText;
-    EditText eventLocationEditText;
-    Button setDateButton;
-    Button startTimeButton;
-    Button endTimeButton;
-    Button alertTypeButton;
-    ToggleButton saveTemplateToggle;
-    Button addToCalendarButton;
+    private EditText eventTitleEditText;
+    private EditText eventLocationEditText;
+    private Button setDateButton;
+    private TextView setDateTextView;
+    private Button startTimeButton;
+    private TextView startTimeTextView;
+    private Button endTimeButton;
+    private TextView endTimeTextView;
+    private Button alertTypeButton;
+    private ToggleButton saveTemplateToggle;
+    private Button addToCalendarButton;
 
     private String eventTitle;
     private String eventLocation;
@@ -43,7 +53,41 @@ public class NewEventActivity extends AppCompatActivity {
         saveTemplateToggle = findViewById(R.id.save_template_button);
         addToCalendarButton = findViewById(R.id.add_to_calendar_button);
 
+        setDateButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View v) {
+                Calendar currentDate = Calendar.getInstance();
+                int year = currentDate.get(Calendar.YEAR);
+                int month = currentDate.get(Calendar.MONTH);
+                int day = currentDate.get(Calendar.DAY_OF_MONTH);
 
+                DatePickerDialog datePicker;
+                datePicker = new DatePickerDialog(getApplicationContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
+                        selectedMonth = selectedMonth + 1;
+                        setDateTextView.setText("" + selectedDayOfMonth + "/" + selectedMonth + "/" + selectedYear);
+                    }
+                }, year, month, day);
+                datePicker.setTitle("Select Date");
+                datePicker.show();
+            }
+        });
+
+        startTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                TODO
+            }
+        });
+
+        endTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                TODO
+            }
+        });
 
         alertTypeButton.setOnClickListener(new View.OnClickListener() {
             @Override
