@@ -148,6 +148,9 @@ public class NewEventActivity extends AppCompatActivity {
                 if (saveTemplateToggleState.equals(true)) {
                     saveEventTemplate();
                 }
+
+                saveEvent();
+
                 finish();
             }
         });
@@ -180,6 +183,9 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
     private void saveEventTemplate() {
-            MainActivity.eventTemplateDatabase.eventTemplateDAO().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+            MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
         }
+    private void saveEvent() {
+        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+    }
 }

@@ -6,7 +6,7 @@ import androidx.room.Query;
 import java.util.List;
 
 @Dao
-public interface EventTemplateDAO {
+public interface EventTemplateDao {
     @Query("INSERT INTO EventTemplates (Title, Location, Date, `Start Time`, `End Time`, `Alert Type`) VALUES (:title, :location, :date, :startTime, :endTime, :alertType)")
     void create(String title, String location, String date, String startTime, String endTime, String alertType);
 
@@ -17,5 +17,5 @@ public interface EventTemplateDAO {
     void delete(int id);
 
     @Query("SELECT * FROM EventTemplates")
-    List<Event> getAllTemplates();
+    List<EventTemplate> getAllTemplates();
 }

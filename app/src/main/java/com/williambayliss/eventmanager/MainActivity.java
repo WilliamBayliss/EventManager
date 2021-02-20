@@ -15,13 +15,18 @@ public class MainActivity extends AppCompatActivity {
     FloatingActionButton newEventButton;
     CalendarView calendarView;
     public static EventTemplateDatabase eventTemplateDatabase;
+    public static EventDatabase eventDatabase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        eventTemplateDatabase = Room.databaseBuilder(getApplicationContext(), EventTemplateDatabase.class, "Event Templates")
+        eventTemplateDatabase = Room.databaseBuilder(getApplicationContext(), EventTemplateDatabase.class, "EventTemplates")
+                .allowMainThreadQueries()
+                .build();
+
+        eventDatabase = Room.databaseBuilder(getApplicationContext(), EventDatabase.class, "Events")
                 .allowMainThreadQueries()
                 .build();
 

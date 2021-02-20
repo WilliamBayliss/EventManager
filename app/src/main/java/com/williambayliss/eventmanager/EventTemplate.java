@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "Events")
-public class Event {
+@Entity(tableName = "EventTemplates")
+public class EventTemplate {
     @PrimaryKey
     public int id;
     @ColumnInfo(name = "Title")
