@@ -1,4 +1,6 @@
 package com.williambayliss.eventmanager;
 
-public class EventListActivity {
+import androidx.appcompat.app.AppCompatActivity;
+
+public class EventListActivity extends AppCompatActivity {
 }
