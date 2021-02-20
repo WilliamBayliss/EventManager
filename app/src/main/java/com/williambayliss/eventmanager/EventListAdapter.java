@@ -1,6 +1,7 @@
 package com.williambayliss.eventmanager;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,14 +41,17 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             });
         }
     }
-
     private List<Event> eventList = new ArrayList<>();
 
-    EventListAdapter(Context context) {
-        loadDayEvents();
+    EventListAdapter(Context context, String selectedDate) {
+        loadDayEvents(selectedDate);
     }
 
-    public void loadDayEvents() {
+    public void loadDayEvents(String selectedDate) {
+        eventList = MainActivity.eventDatabase.eventDao().getDaysEvents(selectedDate);
+    }
+
+    public void loadAllEvents() {
         eventList = MainActivity.eventDatabase.eventDao().getAllEvents();
     }
 

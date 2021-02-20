@@ -73,7 +73,7 @@ public class NewEventActivity extends AppCompatActivity {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
                         selectedMonth = selectedMonth + 1;
-                        setDateTextView.setText("" + selectedDayOfMonth + "/" + selectedMonth + "/" + selectedYear);
+                        setDateTextView.setText(selectedDayOfMonth + "/" + selectedMonth + "/" + selectedYear);
                     }
                 }, year, month, day);
                 datePicker.setTitle("Select Date");

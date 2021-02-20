@@ -43,7 +43,8 @@ public class MainActivity extends AppCompatActivity {
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
-                String selectedDate = "" + year + "/" + month + "/" + dayOfMonth;
+                month = month + 1;
+                String selectedDate = dayOfMonth + "/" + month + "/" + year;
                 launchEventListActivity(selectedDate);
             }
         });
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void launchEventListActivity(String date) {
         Intent intent = new Intent(this, EventListActivity.class);
-        intent.putExtra("event date", date);
+        intent.putExtra("selectedDate", date);
         startActivity(intent);
     }
 }
