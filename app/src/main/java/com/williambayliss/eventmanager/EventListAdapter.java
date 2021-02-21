@@ -41,7 +41,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             });
         }
     }
-    private List<Event> eventList = new ArrayList<>();
+    public List<Event> eventList = new ArrayList<>();
 
     EventListAdapter(Context context, String selectedDate) {
         loadDayEvents(selectedDate);
@@ -54,6 +54,13 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     public void loadAllEvents() {
         eventList = MainActivity.eventDatabase.eventDao().getAllEvents();
     }
+
+    public void updateDayEventList(List<Event> eventList, String selectedDay) {
+        eventList.clear();
+        loadDayEvents(selectedDay);
+    }
+
+
 
 
     @NonNull
