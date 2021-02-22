@@ -33,6 +33,7 @@ public class AddEventToDayActivity extends AppCompatActivity {
     private TextView endTimeTextView;
     private Button alertTypeButton;
     private ToggleButton saveTemplateToggle;
+    private Button loadFromTemplates;
     private Button addToCalendarButton;
 
     private String eventTitle;
@@ -63,6 +64,7 @@ public class AddEventToDayActivity extends AppCompatActivity {
         endTimeTextView = findViewById(R.id.end_time_text_view);
         alertTypeButton = findViewById(R.id.alert_type_button);
         saveTemplateToggle = findViewById(R.id.save_template_button);
+        loadFromTemplates = findViewById(R.id.load_from_template_button);
         addToCalendarButton = findViewById(R.id.add_to_calendar_button);
 
         setDateTextView.setText(eventDate);
@@ -122,6 +124,13 @@ public class AddEventToDayActivity extends AppCompatActivity {
             }
         });
 
+        loadFromTemplates.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTemplate();
+            }
+        });
+
         addToCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -167,10 +176,15 @@ public class AddEventToDayActivity extends AppCompatActivity {
     }
 
     private void saveEventTemplate() {
-        MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+        MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, startTime, endTime, alertType);
     }
     private void saveEvent() {
         MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+    }
+
+    private void loadTemplate() {
+        Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
+        startActivity(intent);
     }
 
 }

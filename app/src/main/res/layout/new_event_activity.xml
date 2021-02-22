@@ -139,11 +139,20 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:id="@+id/load_from_template_button"
+        android:text="Load from Templates"
+        android:textSize="20dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="40dp"
         android:text="Add to Calendar"
         android:id="@+id/add_to_calendar_button"
         android:textSize="20dp"

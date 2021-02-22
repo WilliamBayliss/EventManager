@@ -1,4 +1,4 @@
-package com.williambayliss.eventmanager;
+    package com.williambayliss.eventmanager;
 
 import android.content.Context;
 import android.util.Log;
@@ -51,9 +51,6 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         eventList = MainActivity.eventDatabase.eventDao().getDaysEvents(selectedDate);
     }
 
-    public void loadAllEvents() {
-        eventList = MainActivity.eventDatabase.eventDao().getAllEvents();
-    }
 
     public void updateDayEventList(List<Event> eventList, String selectedDay) {
         eventList.clear();

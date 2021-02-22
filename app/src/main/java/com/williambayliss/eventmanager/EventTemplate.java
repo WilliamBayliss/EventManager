@@ -12,8 +12,6 @@ public class EventTemplate {
     public String title;
     @ColumnInfo(name = "Location")
     public String location;
-    @ColumnInfo(name = "Date")
-    public String date;
     @ColumnInfo(name = "Start Time")
     public String startTime;
     @ColumnInfo(name = "End Time")

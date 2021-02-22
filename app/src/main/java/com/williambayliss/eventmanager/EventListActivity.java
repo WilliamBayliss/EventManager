@@ -47,7 +47,6 @@ public class EventListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.e("e", "It's happening bro");
         eventListAdapter.updateDayEventList(eventListAdapter.eventList, selectedDate);
         eventListAdapter.notifyDataSetChanged();
     }

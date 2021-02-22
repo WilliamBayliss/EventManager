@@ -2,6 +2,7 @@ package com.williambayliss.eventmanager;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
@@ -33,6 +34,7 @@ public class NewEventActivity extends AppCompatActivity {
     private TextView endTimeTextView;
     private Button alertTypeButton;
     private ToggleButton saveTemplateToggle;
+    private Button loadTemplateButton;
     private Button addToCalendarButton;
 
     private String eventTitle;
@@ -57,6 +59,7 @@ public class NewEventActivity extends AppCompatActivity {
         endTimeTextView = findViewById(R.id.end_time_text_view);
         alertTypeButton = findViewById(R.id.alert_type_button);
         saveTemplateToggle = findViewById(R.id.save_template_button);
+        loadTemplateButton = findViewById(R.id.load_from_template_button);
         addToCalendarButton = findViewById(R.id.add_to_calendar_button);
 
         setDateButton.setOnClickListener(new View.OnClickListener() {
@@ -136,6 +139,13 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+        loadTemplateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                loadTemplate();
+            }
+        });
+
         addToCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,9 +193,14 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
     private void saveEventTemplate() {
-            MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+            MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, startTime, endTime, alertType);
         }
     private void saveEvent() {
         MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+    }
+
+    private void loadTemplate() {
+        Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
+        startActivity(intent);
     }
 }
