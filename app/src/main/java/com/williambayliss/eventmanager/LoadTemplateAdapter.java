@@ -1,9 +1,11 @@
 package com.williambayliss.eventmanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -29,12 +31,7 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
             templateStartTimeTextView = view.findViewById(R.id.template_start_time_text_view);
             templateEndTimeTextView = view.findViewById(R.id.template_until_time_text_view);
 
-            containerView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    TODO: load from template
-                }
-            });
+
         }
     }
     public List<EventTemplate> templateList = new ArrayList<>();
@@ -68,10 +65,15 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         holder.templateStartTimeTextView.setText(currentTemplate.startTime);
         holder.templateEndTimeTextView.setText(currentTemplate.endTime);
         holder.containerView.setTag(currentTemplate);
-    }
+        }
 
     @Override
     public int getItemCount() {
         return templateList.size();
+    }
+
+    public int getItemID(int position) {
+        EventTemplate current = templateList.get(position);
+        return current.id;
     }
 }

@@ -18,4 +18,5 @@ public interface EventTemplateDao {
 
     @Query("SELECT * FROM EventTemplates")
     List<EventTemplate> getAllTemplates();
+
 }

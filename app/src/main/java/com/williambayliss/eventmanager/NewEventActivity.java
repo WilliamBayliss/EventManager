@@ -143,7 +143,8 @@ public class NewEventActivity extends AppCompatActivity {
         loadTemplateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadTemplate();
+                Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -188,6 +189,7 @@ public class NewEventActivity extends AppCompatActivity {
         });
     }
 
+
     private boolean onMenuItemOptionClick(MenuItem item) {
         Toast.makeText(this, "Selected item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
         switch (item.getItemId()) {
@@ -221,8 +223,11 @@ public class NewEventActivity extends AppCompatActivity {
         MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
     }
 
-    private void loadTemplate() {
-        Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
-        startActivity(intent);
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Intent intent = getIntent();
+        intent.getExtras();
+
     }
 }
