@@ -23,17 +23,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+//        Creates Event Template Database
         eventTemplateDatabase = Room.databaseBuilder(getApplicationContext(), EventTemplateDatabase.class, "EventTemplates")
                 .allowMainThreadQueries()
                 .build();
 
+//        Creates Event Database
         eventDatabase = Room.databaseBuilder(getApplicationContext(), EventDatabase.class, "Events")
                 .allowMainThreadQueries()
                 .build();
 
+//        Selects calendar and button from layout
         calendarView = findViewById(R.id.calendar_view);
         newEventButton = findViewById(R.id.new_event_button);
 
+//        Launches NewEventActivity
         newEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+//        Will launch EventListActivity for selected Date on click
         calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
@@ -51,11 +56,13 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+//    Launches NewEventActivity
     private void launchNewEventActivity() {
         Intent intent = new Intent(this, NewEventActivity.class);
         startActivity(intent);
     }
 
+//    Launches EventListActivity
     private void launchEventListActivity(String date) {
         Intent intent = new Intent(this, EventListActivity.class);
         intent.putExtra("selectedDate", date);

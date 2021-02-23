@@ -49,6 +49,8 @@ public class NewEventActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        Selects layout, attaches layout items to variables
         setContentView(R.layout.new_event_activity);
         eventTitleEditText = findViewById(R.id.event_title);
         eventLocationEditText = findViewById(R.id.event_location);
@@ -63,6 +65,7 @@ public class NewEventActivity extends AppCompatActivity {
         loadTemplateButton = findViewById(R.id.load_from_template_button);
         addToCalendarButton = findViewById(R.id.add_to_calendar_button);
 
+//        Launches DatePicker on button press
         setDateButton.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
@@ -76,6 +79,8 @@ public class NewEventActivity extends AppCompatActivity {
                 datePicker = new DatePickerDialog(NewEventActivity.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
+//                        Selected month increased by 1 because starts counting at 0
+//                        & need correct month value for DB retreival elsewhere
                         selectedMonth = selectedMonth + 1;
                         setDateTextView.setText(selectedDayOfMonth + "/" + selectedMonth + "/" + selectedYear);
                     }
@@ -85,6 +90,7 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+//        Launches Timepicker on button press, sets user selection as Textview text
         startTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,6 +110,7 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+//        Launches TimePicker on button press, sets user selection as Textview text
         endTimeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +131,7 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+//        Launches popup menu to save selection as String alertType
         alertTypeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -140,6 +148,7 @@ public class NewEventActivity extends AppCompatActivity {
             }
         });
 
+//        Launches LoadTemplateActivity on button press
         loadTemplateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -151,12 +160,14 @@ public class NewEventActivity extends AppCompatActivity {
         addToCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Gets data DB entry
                 eventTitle = eventTitleEditText.getText().toString();
                 eventLocation = eventLocationEditText.getText().toString();
                 saveTemplateToggleState = saveTemplateToggle.isChecked();
                 eventDate = setDateTextView.getText().toString();
                 startTime = startTimeTextView.getText().toString();
                 endTime = endTimeTextView.getText().toString();
+//                This logic ensures that no fields left blank
                 if (eventTitle.length() == 0) {
                     Toast.makeText(getApplicationContext(), "Error: Title field empty", Toast.LENGTH_SHORT).show();
                     return;
@@ -177,12 +188,13 @@ public class NewEventActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Error: No alert type selected", Toast.LENGTH_SHORT).show();
                 }
                 else {
+//                    Saves template to DB if toggled
                     if (saveTemplateToggleState.equals(true)) {
                         saveEventTemplate();
                     }
-
+//                    Saves Event to DB
                     saveEvent();
-
+//                     Ends activity
                     finish();
                 }
             }
@@ -191,7 +203,9 @@ public class NewEventActivity extends AppCompatActivity {
 
 
     private boolean onMenuItemOptionClick(MenuItem item) {
+//        Popup text to show which item selected
         Toast.makeText(this, "Selected item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//        Handles item selection, saves selection as String alertType
         switch (item.getItemId()) {
             case R.id.timeOfEvent:
                 alertType = "At time of event";
@@ -216,9 +230,11 @@ public class NewEventActivity extends AppCompatActivity {
         }
     }
 
+//    Saves EventTemplate to DB
     private void saveEventTemplate() {
             MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, startTime, endTime, alertType);
         }
+//        Saves Event to event db
     private void saveEvent() {
         MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
     }

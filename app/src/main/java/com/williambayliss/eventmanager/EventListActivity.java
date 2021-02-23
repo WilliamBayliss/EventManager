@@ -38,8 +38,9 @@ public class EventListActivity extends AppCompatActivity {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallBack);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
+//        Selects FloatingActionButton and adds onclick Listener
+//                to launch AddEventToDay Activity
         newEventButton = findViewById(R.id.add_event_to_day_button);
-
         newEventButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,10 +72,13 @@ public class EventListActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//           Show popup text saying event deleted
             Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_SHORT).show();
+//           Get id of selected Event from list and delete it from DB
             int position = viewHolder.getAdapterPosition();
             int id = eventListAdapter.getEventID(position);
             MainActivity.eventDatabase.eventDao().delete(id);
+//            Update List of Events, update RecyclerView
             eventListAdapter.updateDayEventList(eventListAdapter.eventList, selectedDate);
             eventListAdapter.notifyDataSetChanged();
         }

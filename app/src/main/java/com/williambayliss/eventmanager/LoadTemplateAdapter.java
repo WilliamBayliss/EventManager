@@ -27,6 +27,7 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
 
         LoadTemplateViewHolder(View view) {
             super(view);
+//            Sets containerView, selects TextViews from layout
             containerView = view.findViewById(R.id.template_row);
             templateTitleTextView = view.findViewById(R.id.template_title_text_view);
             templateLocationTextView = view.findViewById(R.id.template_location_text_view);
@@ -41,12 +42,15 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
             });
         }
     }
+//    List of EventTemplates
     public List<EventTemplate> templateList = new ArrayList<>();
 
+//    Initializes RecyclerView.Adapter
     LoadTemplateAdapter(Context context, Activity activity) {
         loadTemplates();
     }
 
+//    Updates List of EventTemplates
     public void updateTemplates() {
         templateList.clear();
         loadTemplates();
@@ -66,6 +70,8 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
 
     @Override
     public void onBindViewHolder(@NonNull LoadTemplateAdapter.LoadTemplateViewHolder holder, int position) {
+//        Gets current template from position in List
+//        sets textViews in Row to corresponding data
         EventTemplate currentTemplate = templateList.get(position);
         holder.templateTitleTextView.setText(currentTemplate.title);
         holder.templateLocationTextView.setText(currentTemplate.location);
@@ -79,6 +85,7 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         return templateList.size();
     }
 
+//    Gets current Template ID, for use in swipe to delete
     public int getItemID(int position) {
         EventTemplate current = templateList.get(position);
         return current.id;

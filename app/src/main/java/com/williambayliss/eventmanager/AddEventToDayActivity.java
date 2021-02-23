@@ -49,8 +49,11 @@ public class AddEventToDayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.new_event_activity);
         Intent intent = getIntent();
+
+//        Gets selected calendar date from previous activity
         eventDate = intent.getExtras().getString("currentDate");
 
+//        Assigning vars to layout items
         eventTitleEditText = findViewById(R.id.event_title);
         eventLocationEditText = findViewById(R.id.event_location);
         setDateButton = findViewById(R.id.date_button);
@@ -70,6 +73,8 @@ public class AddEventToDayActivity extends AppCompatActivity {
         setDateTextView.setText(eventDate);
 
         startTimeButton.setOnClickListener(new View.OnClickListener() {
+//            This function brings up a timePicker and sets the StartTimeTextView
+//                  text to the user's selection
             @Override
             public void onClick(View v) {
                 Calendar currentTime = Calendar.getInstance();
@@ -89,6 +94,8 @@ public class AddEventToDayActivity extends AppCompatActivity {
         });
 
         endTimeButton.setOnClickListener(new View.OnClickListener() {
+//            This function brings up a timePicker and sets the endTimeTextView
+//                  text to the user's selection
             @Override
             public void onClick(View v) {
 //
@@ -109,6 +116,8 @@ public class AddEventToDayActivity extends AppCompatActivity {
         });
 
         alertTypeButton.setOnClickListener(new View.OnClickListener() {
+//        This function creates a popupmenu on alertTypeButton press to
+//            save selection to String alertType
             @Override
             public void onClick(View v) {
                 PopupMenu menu = new PopupMenu(getApplicationContext(), v);
@@ -125,6 +134,7 @@ public class AddEventToDayActivity extends AppCompatActivity {
         });
 
         loadFromTemplates.setOnClickListener(new View.OnClickListener() {
+//            This function launches LoadTemplateActivity on loadFromTemplates butn click
             @Override
             public void onClick(View v) {
                 loadTemplate();
@@ -134,15 +144,20 @@ public class AddEventToDayActivity extends AppCompatActivity {
         addToCalendarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+//                Saves data to variables for columninfo entries
                 eventTitle = eventTitleEditText.getText().toString();
                 eventLocation = eventLocationEditText.getText().toString();
                 saveTemplateToggleState = saveTemplateToggle.isChecked();
                 eventDate = setDateTextView.getText().toString();
                 startTime = startTimeTextView.getText().toString();
                 endTime = endTimeTextView.getText().toString();
+
+//                if saveTemplateToggleButton is toggled will save data
+//                      to templates database
                 if (saveTemplateToggleState.equals(true)) {
                     saveEventTemplate();
                 }
+//                Adds event to database and ends activity
                 saveEvent();
                 finish();
             }
@@ -150,7 +165,9 @@ public class AddEventToDayActivity extends AppCompatActivity {
     }
 
     private boolean onMenuItemOptionClick(MenuItem item) {
+//        Popup text to show which alert type has been saved
         Toast.makeText(this, "Selected item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+//        Will assign selected menu option to String alertType
         switch (item.getItemId()) {
             case R.id.timeOfEvent:
                 alertType = "At time of event";
@@ -176,13 +193,16 @@ public class AddEventToDayActivity extends AppCompatActivity {
     }
 
     private void saveEventTemplate() {
+//        Adds entry to EventTemplate Database
         MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, startTime, endTime, alertType);
     }
     private void saveEvent() {
+//        Adds entry to Event Database
         MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
     }
 
     private void loadTemplate() {
+//        Launches LoadTemplateActivity
         Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
         startActivity(intent);
     }

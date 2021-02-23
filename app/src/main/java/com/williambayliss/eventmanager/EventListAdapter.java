@@ -26,6 +26,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
 
         EventListViewHolder(View view) {
             super(view);
+//            Assigning container and textViews to layout elements
             containerView = view.findViewById(R.id.event_row);
             eventTitleTextView = view.findViewById(R.id.event_title_text_view);
             eventLocationTextView = view.findViewById(R.id.event_location_text_view);
@@ -41,27 +42,30 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             });
         }
     }
+//    List of Events
     public List<Event> eventList = new ArrayList<>();
 
+//    Initializes EventListAdapter
     EventListAdapter(Context context, String selectedDate) {
         loadDayEvents(selectedDate);
     }
 
+//    Loads all events that have date value matching selectedDate into List
     public void loadDayEvents(String selectedDate) {
         eventList = MainActivity.eventDatabase.eventDao().getDaysEvents(selectedDate);
     }
 
-
+//    Reloads eventList, for use on event add/delete to update Recyclerview
     public void updateDayEventList(List<Event> eventList, String selectedDay) {
         eventList.clear();
         loadDayEvents(selectedDay);
     }
 
+//    Gets event id, for user in deleting items from Recyclerview
     public int getEventID(int position) {
         Event current = eventList.get(position);
         return current.id;
     }
-
 
 
 

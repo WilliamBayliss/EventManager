@@ -23,13 +23,14 @@ public class LoadTemplateActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.load_template_activity);
 
+//        Create recyclerView and layout manager
         recyclerView = findViewById(R.id.template_list_recycler_view);
         loadTemplateAdapter = new LoadTemplateAdapter(getApplicationContext(), LoadTemplateActivity.this);
         layoutManager = new LinearLayoutManager(this);
-
         recyclerView.setAdapter(loadTemplateAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
+//        Allows for swipe to delete and attaches to recyclerView
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallBack);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
@@ -43,7 +44,10 @@ public class LoadTemplateActivity extends AppCompatActivity {
 
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+//            Popup text to show item deleted
             Toast.makeText(getApplicationContext(), "Template deleted", Toast.LENGTH_SHORT).show();
+//            Gets selected Template, gets corresponding ID and deletes correct Template from DB
+//            updates recyclerView
             int position = viewHolder.getAdapterPosition();
             int id = loadTemplateAdapter.getItemID(position);
             MainActivity.eventTemplateDatabase.eventTemplateDao().delete(id);
