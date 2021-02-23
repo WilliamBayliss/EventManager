@@ -57,6 +57,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         loadDayEvents(selectedDay);
     }
 
+    public int getEventID(int position) {
+        Event current = eventList.get(position);
+        return current.id;
+    }
+
 
 
 

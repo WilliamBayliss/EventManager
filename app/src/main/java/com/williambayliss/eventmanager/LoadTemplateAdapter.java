@@ -1,5 +1,6 @@
 package com.williambayliss.eventmanager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -31,12 +33,17 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
             templateStartTimeTextView = view.findViewById(R.id.template_start_time_text_view);
             templateEndTimeTextView = view.findViewById(R.id.template_until_time_text_view);
 
+            containerView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
 
+                }
+            });
         }
     }
     public List<EventTemplate> templateList = new ArrayList<>();
 
-    LoadTemplateAdapter(Context context) {
+    LoadTemplateAdapter(Context context, Activity activity) {
         loadTemplates();
     }
 

@@ -24,7 +24,7 @@ public class LoadTemplateActivity extends AppCompatActivity {
         setContentView(R.layout.load_template_activity);
 
         recyclerView = findViewById(R.id.template_list_recycler_view);
-        loadTemplateAdapter = new LoadTemplateAdapter(getApplicationContext());
+        loadTemplateAdapter = new LoadTemplateAdapter(getApplicationContext(), LoadTemplateActivity.this);
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(loadTemplateAdapter);

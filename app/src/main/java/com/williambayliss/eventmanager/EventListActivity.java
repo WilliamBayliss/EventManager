@@ -4,8 +4,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -32,6 +35,9 @@ public class EventListActivity extends AppCompatActivity {
         recyclerView.setAdapter(eventListAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallBack);
+        itemTouchHelper.attachToRecyclerView(recyclerView);
+
         newEventButton = findViewById(R.id.add_event_to_day_button);
 
         newEventButton.setOnClickListener(new View.OnClickListener() {
@@ -56,5 +62,22 @@ public class EventListActivity extends AppCompatActivity {
         i.putExtra("currentDate", selectedDate);
         startActivity(i);
     }
+
+    ItemTouchHelper.SimpleCallback simpleItemTouchCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+        @Override
+        public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
+            return false;
+        }
+
+        @Override
+        public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
+            Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_SHORT).show();
+            int position = viewHolder.getAdapterPosition();
+            int id = eventListAdapter.getEventID(position);
+            MainActivity.eventDatabase.eventDao().delete(id);
+            eventListAdapter.updateDayEventList(eventListAdapter.eventList, selectedDate);
+            eventListAdapter.notifyDataSetChanged();
+        }
+    };
 
 }

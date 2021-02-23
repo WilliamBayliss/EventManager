@@ -144,7 +144,7 @@ public class NewEventActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         });
 
@@ -227,7 +227,10 @@ public class NewEventActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         Intent intent = getIntent();
-        intent.getExtras();
-
+        eventTitleEditText.setText(intent.getStringExtra("TemplateTitle"));
+        eventLocationEditText.setText(intent.getStringExtra("TemplateLocation"));
+        startTimeTextView.setText(intent.getStringExtra("TemplateStartTime"));
+        endTimeTextView.setText(intent.getStringExtra("TemplateEndTime"));
+        alertType = intent.getStringExtra("TemplateAlertType");
     }
 }
