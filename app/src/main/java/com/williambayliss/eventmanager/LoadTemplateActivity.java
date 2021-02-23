@@ -3,6 +3,8 @@ package com.williambayliss.eventmanager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +31,21 @@ public class LoadTemplateActivity extends AppCompatActivity {
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setAdapter(loadTemplateAdapter);
         recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.addOnItemTouchListener(
+                new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(View view, int position) {
+//                  TODO
+                    }
+
+                    @Override
+                    public void onLongItemClick(View view, int position) {
+//                        TODO
+
+                    }
+                })
+        );
 
 //        Allows for swipe to delete and attaches to recyclerView
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallBack);

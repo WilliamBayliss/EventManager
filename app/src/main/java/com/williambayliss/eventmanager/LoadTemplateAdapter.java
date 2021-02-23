@@ -78,7 +78,7 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         holder.templateStartTimeTextView.setText(currentTemplate.startTime);
         holder.templateEndTimeTextView.setText(currentTemplate.endTime);
         holder.containerView.setTag(currentTemplate);
-        }
+    }
 
     @Override
     public int getItemCount() {
@@ -90,4 +90,10 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         EventTemplate current = templateList.get(position);
         return current.id;
     }
+
+    public EventTemplate getTemplateData(int position) {
+        EventTemplate current = templateList.get(position);
+        return current;
+    }
+
 }
