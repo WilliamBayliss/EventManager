@@ -1,5 +1,6 @@
 package com.williambayliss.eventmanager;
 
+import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
@@ -204,7 +205,21 @@ public class AddEventToDayActivity extends AppCompatActivity {
     private void loadTemplate() {
 //        Launches LoadTemplateActivity
         Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1)
+            if (resultCode == Activity.RESULT_OK) {
+                eventTitleEditText.setText(data.getStringExtra("TemplateTitle"));
+                eventLocationEditText.setText(data.getStringExtra("TemplateLocation"));
+                startTimeTextView.setText(data.getStringExtra("TemplateStartTime"));
+                endTimeTextView.setText(data.getStringExtra("TemplateEndTime"));
+                alertType = data.getStringExtra("TemplateAlertType");
+                Log.e("Error", "Template Title: " + data.getStringExtra("TemplateTitle"));
+            }
     }
 
 }

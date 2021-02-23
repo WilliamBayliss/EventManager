@@ -1,11 +1,13 @@
 package com.williambayliss.eventmanager;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -242,11 +244,14 @@ public class NewEventActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Intent intent = getIntent();
-        eventTitleEditText.setText(intent.getStringExtra("TemplateTitle"));
-        eventLocationEditText.setText(intent.getStringExtra("TemplateLocation"));
-        startTimeTextView.setText(intent.getStringExtra("TemplateStartTime"));
-        endTimeTextView.setText(intent.getStringExtra("TemplateEndTime"));
-        alertType = intent.getStringExtra("TemplateAlertType");
+        if (requestCode == 1)
+            if (resultCode == Activity.RESULT_OK) {
+                eventTitleEditText.setText(data.getStringExtra("TemplateTitle"));
+                eventLocationEditText.setText(data.getStringExtra("TemplateLocation"));
+                startTimeTextView.setText(data.getStringExtra("TemplateStartTime"));
+                endTimeTextView.setText(data.getStringExtra("TemplateEndTime"));
+                alertType = data.getStringExtra("TemplateAlertType");
+                Log.e("Error", "Template Title: " + data.getStringExtra("TemplateTitle"));
+            }
     }
 }
