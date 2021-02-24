@@ -32,28 +32,6 @@ public class LoadTemplateActivity extends AppCompatActivity {
         recyclerView.setAdapter(loadTemplateAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-                        EventTemplate selectedTemplate = loadTemplateAdapter.getTemplateData(position);
-                        Intent intent = new Intent(getApplicationContext(), NewEventActivity.class);
-                        intent.putExtra("TemplateTitle", selectedTemplate.title);
-                        intent.putExtra("TemplateLocation", selectedTemplate.location);
-                        intent.putExtra("TemplateStartTime", selectedTemplate.startTime);
-                        intent.putExtra("TemplateEndTime", selectedTemplate.endTime);
-                        intent.putExtra("TemplateAlertType", selectedTemplate.alertType);
-                        setResult(LoadTemplateActivity.RESULT_OK, intent);
-                        finish();
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-//                        TODO
-
-                    }
-                })
-        );
 
 //        Allows for swipe to delete and attaches to recyclerView
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallBack);

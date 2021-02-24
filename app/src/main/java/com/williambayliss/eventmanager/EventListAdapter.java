@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,7 +17,7 @@ import java.util.List;
 
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventListViewHolder> {
-    public static class EventListViewHolder extends RecyclerView.ViewHolder {
+    public static class EventListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
         public LinearLayout containerView;
         public TextView eventTitleTextView;
         public TextView eventLocationTextView;
@@ -34,12 +35,20 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             eventEndTimeTextView = view.findViewById(R.id.event_until_time_text_view);
             eventDateTextView = view.findViewById(R.id.event_date_text_view);
 
-            containerView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    TODO create popup menu to either edit or delete event
-                }
-            });
+            containerView.setOnClickListener(this);
+            containerView.setOnLongClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(containerView.getContext(), "It is absolute happening bro", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            Toast.makeText(containerView.getContext(), "IT's happening bro", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 //    List of Events

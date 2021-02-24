@@ -18,13 +18,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapter.LoadTemplateViewHolder> {
-    public static class LoadTemplateViewHolder extends RecyclerView.ViewHolder {
+    public static class LoadTemplateViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener {
         public LinearLayout containerView;
         public TextView templateTitleTextView;
         public TextView templateLocationTextView;
         public TextView templateStartTimeTextView;
         public TextView templateEndTimeTextView;
-
         LoadTemplateViewHolder(View view) {
             super(view);
 //            Sets containerView, selects TextViews from layout
@@ -34,12 +33,20 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
             templateStartTimeTextView = view.findViewById(R.id.template_start_time_text_view);
             templateEndTimeTextView = view.findViewById(R.id.template_until_time_text_view);
 
-            containerView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+            containerView.setOnClickListener(this);
+            containerView.setOnLongClickListener(this);
+        }
 
-                }
-            });
+        @Override
+        public void onClick(View v) {
+            Toast.makeText(containerView.getContext(), "It is absolute happening bro", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public boolean onLongClick(View v) {
+            Toast.makeText(containerView.getContext(), "IT's happening bro", Toast.LENGTH_SHORT).show();
+            return false;
         }
     }
 //    List of EventTemplates

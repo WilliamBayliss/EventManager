@@ -35,19 +35,6 @@ public class EventListActivity extends AppCompatActivity {
         recyclerView.setAdapter(eventListAdapter);
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerView.addOnItemTouchListener(
-                new RecyclerItemClickListener(getApplicationContext(), recyclerView, new RecyclerItemClickListener.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(View view, int position) {
-//                        TODO
-                    }
-
-                    @Override
-                    public void onLongItemClick(View view, int position) {
-//                        TODO
-                    }
-                }));
-
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(simpleItemTouchCallBack);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
