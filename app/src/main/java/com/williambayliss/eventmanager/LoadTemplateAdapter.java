@@ -24,6 +24,8 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         public TextView templateLocationTextView;
         public TextView templateStartTimeTextView;
         public TextView templateEndTimeTextView;
+        public TextView templateAlertTypeTextView;
+
         LoadTemplateViewHolder(View view) {
             super(view);
 //            Sets containerView, selects TextViews from layout
@@ -32,6 +34,7 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
             templateLocationTextView = view.findViewById(R.id.template_location_text_view);
             templateStartTimeTextView = view.findViewById(R.id.template_start_time_text_view);
             templateEndTimeTextView = view.findViewById(R.id.template_until_time_text_view);
+            templateAlertTypeTextView = view.findViewById(R.id.template_alert_type_text_view);
 
             containerView.setOnClickListener(this);
             containerView.setOnLongClickListener(this);
@@ -39,13 +42,22 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(containerView.getContext(), "It is absolute happening bro", Toast.LENGTH_SHORT).show();
+            Toast.makeText(containerView.getContext(), "Template Selected", Toast.LENGTH_SHORT).show();
+            Context context = v.getContext();
+
+            Intent intent = new Intent(context, NewEventActivity.class);
+            intent.putExtra("TemplateTitle", templateTitleTextView.getText());
+            intent.putExtra("TemplateLocation", templateLocationTextView.getText());
+            intent.putExtra("TemplateStartTime", templateStartTimeTextView.getText());
+            intent.putExtra("TemplateEndTime", templateEndTimeTextView.getText());
+            intent.putExtra("TemplateAlertType", templateAlertTypeTextView.getText());
+            ((Activity)context).setResult(Activity.RESULT_OK, intent);
+            ((Activity)context).finish();
 
         }
 
         @Override
         public boolean onLongClick(View v) {
-            Toast.makeText(containerView.getContext(), "IT's happening bro", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -84,6 +96,8 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         holder.templateLocationTextView.setText(currentTemplate.location);
         holder.templateStartTimeTextView.setText(currentTemplate.startTime);
         holder.templateEndTimeTextView.setText(currentTemplate.endTime);
+        holder.templateAlertTypeTextView.setText(currentTemplate.alertType);
+
         holder.containerView.setTag(currentTemplate);
     }
 
