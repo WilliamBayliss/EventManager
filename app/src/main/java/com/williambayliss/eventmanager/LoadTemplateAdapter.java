@@ -15,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapter.LoadTemplateViewHolder> {
@@ -43,14 +45,16 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         @Override
         public void onClick(View v) {
             Toast.makeText(containerView.getContext(), "Template Selected", Toast.LENGTH_SHORT).show();
+//            Gets View context
             Context context = v.getContext();
-
+//            Creates intent and loads EventTemplate data into it
             Intent intent = new Intent(context, NewEventActivity.class);
             intent.putExtra("TemplateTitle", templateTitleTextView.getText());
             intent.putExtra("TemplateLocation", templateLocationTextView.getText());
             intent.putExtra("TemplateStartTime", templateStartTimeTextView.getText());
             intent.putExtra("TemplateEndTime", templateEndTimeTextView.getText());
             intent.putExtra("TemplateAlertType", templateAlertTypeTextView.getText());
+//            Sets resultcode to OK and finishes Activity, passing data back to NewEventList activity
             ((Activity)context).setResult(Activity.RESULT_OK, intent);
             ((Activity)context).finish();
 
@@ -63,6 +67,7 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
     }
 //    List of EventTemplates
     public List<EventTemplate> templateList = new ArrayList<>();
+
 
 //    Initializes RecyclerView.Adapter
     LoadTemplateAdapter(Context context, Activity activity) {

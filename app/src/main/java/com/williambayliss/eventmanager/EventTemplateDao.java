@@ -16,7 +16,7 @@ public interface EventTemplateDao {
     @Query("DELETE FROM EventTemplates WHERE id = :id")
     void delete(int id);
 
-    @Query("SELECT * FROM EventTemplates")
+    @Query("SELECT * FROM EventTemplates ORDER BY Title")
     List<EventTemplate> getAllTemplates();
 
 }

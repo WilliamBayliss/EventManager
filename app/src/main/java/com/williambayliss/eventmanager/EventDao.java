@@ -16,7 +16,7 @@ public interface EventDao {
     @Query("DELETE FROM Events WHERE id = :id")
     void delete(int id);
 
-    @Query("SELECT * FROM Events WHERE Date = :date")
+    @Query("SELECT * FROM Events WHERE Date = :date ORDER BY `Start Time`")
     List<Event> getDaysEvents(String date);
 
     @Query("SELECT * FROM Events")

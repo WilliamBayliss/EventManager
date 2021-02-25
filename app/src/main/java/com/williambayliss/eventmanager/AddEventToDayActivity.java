@@ -44,7 +44,7 @@ public class AddEventToDayActivity extends AppCompatActivity {
     private String endTime;
     private Boolean saveTemplateToggleState;
 
-    private String alertType;
+    private String alertType = "";
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,14 +153,35 @@ public class AddEventToDayActivity extends AppCompatActivity {
                 startTime = startTimeTextView.getText().toString();
                 endTime = endTimeTextView.getText().toString();
 
-//                if saveTemplateToggleButton is toggled will save data
-//                      to templates database
-                if (saveTemplateToggleState.equals(true)) {
-                    saveEventTemplate();
+                if (eventTitle.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Error: Title field empty", Toast.LENGTH_SHORT).show();
+                    return;
                 }
-//                Adds event to database and ends activity
-                saveEvent();
-                finish();
+                else if (eventLocation.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Error: Location field empty", Toast.LENGTH_SHORT).show();
+                }
+                else if (eventDate.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Error: No date", Toast.LENGTH_SHORT).show();
+                }
+                else if (startTime.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Error: No start time", Toast.LENGTH_SHORT).show();
+                }
+                else if (endTime.length() == 0) {
+                    Toast.makeText(getApplicationContext(), "Error: No end time", Toast.LENGTH_SHORT).show();
+                }
+                else if (alertType.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Error: No alert type selected", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    //                if saveTemplateToggleButton is toggled will save data
+                    //                      to templates database
+                    if (saveTemplateToggleState.equals(true)) {
+                        saveEventTemplate();
+                    }
+                    //                Adds event to database and ends activity
+                    saveEvent();
+                    finish();
+                }
             }
         });
     }

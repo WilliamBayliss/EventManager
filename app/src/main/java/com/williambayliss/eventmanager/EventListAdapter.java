@@ -41,13 +41,11 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
 
         @Override
         public void onClick(View v) {
-            Toast.makeText(containerView.getContext(), "It is absolute happening bro", Toast.LENGTH_SHORT).show();
 
         }
 
         @Override
         public boolean onLongClick(View v) {
-            Toast.makeText(containerView.getContext(), "IT's happening bro", Toast.LENGTH_SHORT).show();
             return false;
         }
     }
