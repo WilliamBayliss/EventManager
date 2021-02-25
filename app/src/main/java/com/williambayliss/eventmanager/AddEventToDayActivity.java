@@ -218,6 +218,7 @@ public class AddEventToDayActivity extends AppCompatActivity {
 //        Adds entry to EventTemplate Database
         MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, startTime, endTime, alertType);
     }
+
     private void saveEvent() {
 //        Adds entry to Event Database
         MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
