@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +24,15 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class NewEventActivity extends AppCompatActivity {
     private EditText eventTitleEditText;
@@ -101,13 +110,14 @@ public class NewEventActivity extends AppCompatActivity {
                 int minute = currentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(NewEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(NewEventActivity.this, android.R.style.Theme_Holo_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        startTimeTextView.setText( selectedHour + ":" + selectedMinute);
+                        startTimeTextView.setText(String.format("%02d:%02d", selectedHour,  selectedMinute));
                     }
                 }, hour, minute, true);
                 timePickerDialog.setTitle("Select Start Time");
+                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 timePickerDialog.show();
             }
         });
@@ -122,13 +132,14 @@ public class NewEventActivity extends AppCompatActivity {
                 int minute = currentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(NewEventActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(NewEventActivity.this, android.R.style.Theme_Holo_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        endTimeTextView.setText( selectedHour + ":" + selectedMinute);
+                        endTimeTextView.setText(String.format("%02d:%02d", selectedHour,  selectedMinute));
                     }
                 }, hour, minute, true);
                 timePickerDialog.setTitle("Select End Time");
+                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 timePickerDialog.show();
             }
         });
@@ -160,15 +171,11 @@ public class NewEventActivity extends AppCompatActivity {
         });
 
         addToCalendarButton.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 //                Gets data DB entry
-                eventTitle = eventTitleEditText.getText().toString();
-                eventLocation = eventLocationEditText.getText().toString();
-                saveTemplateToggleState = saveTemplateToggle.isChecked();
-                eventDate = setDateTextView.getText().toString();
-                startTime = startTimeTextView.getText().toString();
-                endTime = endTimeTextView.getText().toString();
+                assignEventVariables();
 //                This logic ensures that no fields left blank
                 if (eventTitle.length() == 0) {
                     Toast.makeText(getApplicationContext(), "Error: Title field empty", Toast.LENGTH_SHORT).show();
@@ -196,11 +203,54 @@ public class NewEventActivity extends AppCompatActivity {
                     }
 //                    Saves Event to DB
                     saveEvent();
+
+//                    Gather data from notification
+                    int id = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventDate, startTime);
+                    String eventTimeAndDate = startTime + ", " + eventDate;
+                    long notificationDelay = eventDateConverter(eventTimeAndDate);
+
+                    if (alertType == "At time of event") {
+                    } else if (alertType == "Five minutes before event") {
+                        notificationDelay = notificationDelay - (5 * 60 * 1000);
+
+                    } else if (alertType == "Thirty minutes before event") {
+                        notificationDelay = notificationDelay - (30 * 60 * 1000);
+
+                    } else if (alertType == "One hour before event") {
+                        notificationDelay = notificationDelay - (60 * 60 * 1000);
+
+                    } else if (alertType == "One day before event") {
+                        notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
+
+                    } else if (alertType == "One week before event") {
+                        notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
+
+                    }
+
+
 //                     Ends activity
                     finish();
                 }
             }
         });
+    }
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private long eventDateConverter(String eventDate) {
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("H:m, dd/mm/yyy", Locale.CANADA);
+        long millisecondsSinceEpoch = LocalDate.parse(eventDate, dateTimeFormatter)
+                .atStartOfDay(ZoneOffset.UTC)
+                .toInstant()
+                .toEpochMilli();
+        return millisecondsSinceEpoch - System.currentTimeMillis();
+    }
+
+    private void assignEventVariables() {
+        eventTitle = eventTitleEditText.getText().toString();
+        eventLocation = eventLocationEditText.getText().toString();
+        saveTemplateToggleState = saveTemplateToggle.isChecked();
+        eventDate = setDateTextView.getText().toString();
+        startTime = startTimeTextView.getText().toString();
+        endTime = endTimeTextView.getText().toString();
     }
 
 

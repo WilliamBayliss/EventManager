@@ -1,6 +1,9 @@
     package com.williambayliss.eventmanager;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -93,6 +96,23 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         holder.eventStartTimeTextView.setText(currentEvent.startTime);
         holder.eventEndTimeTextView.setText(currentEvent.endTime);
         holder.containerView.setTag(currentEvent);
+
+//        Sets background color of item depending on alert type
+        if (currentEvent.alertType.equals("At time of event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FF7567"));
+        } else if (currentEvent.alertType.equals("Five minutes before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FAFF98"));
+        } else if (currentEvent.alertType.equals("Thirty minutes before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#8AE4FF"));
+        } else if (currentEvent.alertType.equals("One hour before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#ADFF8A"));
+        } else if (currentEvent.alertType.equals("One day before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#D18AFF"));
+        } else if (currentEvent.alertType.equals("One week before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FFBF61"));
+        } else {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     @Override

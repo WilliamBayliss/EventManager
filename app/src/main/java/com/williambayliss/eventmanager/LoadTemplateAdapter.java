@@ -3,6 +3,7 @@ package com.williambayliss.eventmanager;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -104,6 +105,22 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         holder.templateAlertTypeTextView.setText(currentTemplate.alertType);
 
         holder.containerView.setTag(currentTemplate);
+        //        Sets background color of item depending on alert type
+        if (currentTemplate.alertType.equals("At time of event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FF7567"));
+        } else if (currentTemplate.alertType.equals("Five minutes before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FAFF98"));
+        } else if (currentTemplate.alertType.equals("Thirty minutes before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#8AE4FF"));
+        } else if (currentTemplate.alertType.equals("One hour before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#ADFF8A"));
+        } else if (currentTemplate.alertType.equals("One day before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#D18AFF"));
+        } else if (currentTemplate.alertType.equals("One week before event")) {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FFBF61"));
+        } else {
+            holder.containerView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        }
     }
 
     @Override

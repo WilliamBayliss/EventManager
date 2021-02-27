@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
+
 //        Selects calendar and button from layout
         calendarView = findViewById(R.id.calendar_view);
         newEventButton = findViewById(R.id.new_event_button);
@@ -81,4 +84,6 @@ public class MainActivity extends AppCompatActivity {
         intent.putExtra("selectedDate", date);
         startActivity(intent);
     }
+
+
 }

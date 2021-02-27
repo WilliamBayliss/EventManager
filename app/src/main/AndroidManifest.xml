@@ -21,8 +21,6 @@
         <activity android:name=".EventListActivity"/>
         <activity android:name=".AddEventToDayActivity"/>
         <activity android:name=".LoadTemplateActivity"/>
-        <receiver android:name=".NotificationReceiver"
-            android:enabled="true" />
     </application>
 
 </manifest>

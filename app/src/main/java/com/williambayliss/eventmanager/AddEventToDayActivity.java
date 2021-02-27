@@ -83,13 +83,14 @@ public class AddEventToDayActivity extends AppCompatActivity {
                 int minute = currentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(AddEventToDayActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(AddEventToDayActivity.this, android.R.style.Theme_Holo_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        startTimeTextView.setText( selectedHour + ":" + selectedMinute);
+                        startTimeTextView.setText(String.format("%02d:%02d", selectedHour,  selectedMinute));
                     }
                 }, hour, minute, true);
                 timePickerDialog.setTitle("Select Start Time");
+                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 timePickerDialog.show();
             }
         });
@@ -105,13 +106,14 @@ public class AddEventToDayActivity extends AppCompatActivity {
                 int minute = currentTime.get(Calendar.MINUTE);
 
                 TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(AddEventToDayActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                timePickerDialog = new TimePickerDialog(AddEventToDayActivity.this, android.R.style.Theme_Holo_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        endTimeTextView.setText( selectedHour + ":" + selectedMinute);
+                        endTimeTextView.setText(String.format("%02d:%02d", selectedHour,  selectedMinute));
                     }
                 }, hour, minute, true);
                 timePickerDialog.setTitle("Select End Time");
+                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
                 timePickerDialog.show();
             }
         });
