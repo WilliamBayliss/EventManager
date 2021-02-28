@@ -55,6 +55,7 @@ public class LoadTemplateActivity extends AppCompatActivity {
             int id = loadTemplateAdapter.getItemID(position);
             MainActivity.eventTemplateDatabase.eventTemplateDao().delete(id);
             loadTemplateAdapter.updateTemplates();
+            loadTemplateAdapter.notifyDataSetChanged();
         }
     };
 

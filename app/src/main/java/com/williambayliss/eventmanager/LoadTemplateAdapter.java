@@ -107,17 +107,17 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         holder.containerView.setTag(currentTemplate);
         //        Sets background color of item depending on alert type
         if (currentTemplate.alertType.equals("At time of event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#FF7567"));
+            holder.containerView.setBackgroundColor(Color.parseColor("#FF0000"));
         } else if (currentTemplate.alertType.equals("Five minutes before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#FAFF98"));
+            holder.containerView.setBackgroundColor(Color.parseColor("#FF8A00"));
         } else if (currentTemplate.alertType.equals("Thirty minutes before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#8AE4FF"));
+            holder.containerView.setBackgroundColor(Color.parseColor("#1EDA00"));
         } else if (currentTemplate.alertType.equals("One hour before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#ADFF8A"));
+            holder.containerView.setBackgroundColor(Color.parseColor("#0098DA"));
         } else if (currentTemplate.alertType.equals("One day before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#D18AFF"));
+            holder.containerView.setBackgroundColor(Color.parseColor("#9700FF"));
         } else if (currentTemplate.alertType.equals("One week before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#FFBF61"));
+            holder.containerView.setBackgroundColor(Color.parseColor("#FF00E8"));
         } else {
             holder.containerView.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
