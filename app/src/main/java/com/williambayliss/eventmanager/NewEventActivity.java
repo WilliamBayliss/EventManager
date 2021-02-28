@@ -1,8 +1,12 @@
 package com.williambayliss.eventmanager;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -23,11 +27,16 @@ import android.widget.ToggleButton;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
@@ -93,7 +102,7 @@ public class NewEventActivity extends AppCompatActivity {
 //                        Selected month increased by 1 because starts counting at 0
 //                        & need correct month value for DB retreival elsewhere
                         selectedMonth = selectedMonth + 1;
-                        setDateTextView.setText(selectedDayOfMonth + "/" + selectedMonth + "/" + selectedYear);
+                        setDateTextView.setText(String.format("%02d/%02d/%04d", selectedDayOfMonth, selectedMonth, selectedYear));
                     }
                 }, year, month, day);
                 datePicker.setTitle("Select Date");
@@ -179,7 +188,6 @@ public class NewEventActivity extends AppCompatActivity {
 //                This logic ensures that no fields left blank
                 if (eventTitle.length() == 0) {
                     Toast.makeText(getApplicationContext(), "Error: Title field empty", Toast.LENGTH_SHORT).show();
-                    return;
                 }
                 else if (eventLocation.length() == 0) {
                     Toast.makeText(getApplicationContext(), "Error: Location field empty", Toast.LENGTH_SHORT).show();
@@ -197,37 +205,37 @@ public class NewEventActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Error: No alert type selected", Toast.LENGTH_SHORT).show();
                 }
                 else {
+//                    Saves Event to DB
+                    saveEvent();
+
 //                    Saves template to DB if toggled
                     if (saveTemplateToggleState.equals(true)) {
                         saveEventTemplate();
                     }
-//                    Saves Event to DB
-                    saveEvent();
 
 //                    Gather data from notification
-                    int id = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventDate, startTime);
                     String eventTimeAndDate = startTime + ", " + eventDate;
                     long notificationDelay = eventDateConverter(eventTimeAndDate);
 
-                    if (alertType == "At time of event") {
+                    if (alertType.equals("At time of event")) {
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        Log.e("notification delay: ", "" +notificationDelay);
                     } else if (alertType == "Five minutes before event") {
                         notificationDelay = notificationDelay - (5 * 60 * 1000);
-
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
                     } else if (alertType == "Thirty minutes before event") {
                         notificationDelay = notificationDelay - (30 * 60 * 1000);
-
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
                     } else if (alertType == "One hour before event") {
                         notificationDelay = notificationDelay - (60 * 60 * 1000);
-
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
                     } else if (alertType == "One day before event") {
                         notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
-
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
                     } else if (alertType == "One week before event") {
                         notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
-
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
                     }
-
-
 //                     Ends activity
                     finish();
                 }
@@ -236,12 +244,16 @@ public class NewEventActivity extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private long eventDateConverter(String eventDate) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("H:m, dd/mm/yyy", Locale.CANADA);
-        long millisecondsSinceEpoch = LocalDate.parse(eventDate, dateTimeFormatter)
-                .atStartOfDay(ZoneOffset.UTC)
-                .toInstant()
-                .toEpochMilli();
-        return millisecondsSinceEpoch - System.currentTimeMillis();
+        Log.e("Date given", "" + eventDate);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
+        LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
+        long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        Log.e("event time in milis", "" + eventTimeInMillis);
+        long currentTime = System.currentTimeMillis();
+        Log.e("current time in millis", "" + currentTime);
+        long delay = eventTimeInMillis - currentTime;
+        Log.e("delay", "" + delay);
+        return delay;
     }
 
     private void assignEventVariables() {
@@ -301,7 +313,29 @@ public class NewEventActivity extends AppCompatActivity {
                 startTimeTextView.setText(data.getStringExtra("TemplateStartTime"));
                 endTimeTextView.setText(data.getStringExtra("TemplateEndTime"));
                 alertType = data.getStringExtra("TemplateAlertType");
-                Log.e("Error", "Template Title: " + data.getStringExtra("TemplateTitle"));
             }
+    }
+
+
+    private Notification buildNotification(String title, String location, String eventDate) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
+        builder.setContentTitle(title);
+        builder.setContentText(location + ", " + eventDate);
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setAutoCancel(true);
+        builder.setChannelId(NotificationChannelBuilder.CHANNEL_1_ID);
+        return builder.build();
+    }
+
+
+    private void scheduleNotification (Notification notification , long delay) {
+        Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION , notification) ;
+        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0, notificationIntent, PendingIntent. FLAG_UPDATE_CURRENT ) ;
+        long futureInMillis = SystemClock.elapsedRealtime () + delay ;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE ) ;
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent) ;
     }
 }

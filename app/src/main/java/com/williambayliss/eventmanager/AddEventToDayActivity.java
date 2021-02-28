@@ -1,10 +1,15 @@
 package com.williambayliss.eventmanager;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,8 +25,13 @@ import android.widget.ToggleButton;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
+import java.util.Locale;
 
 public class AddEventToDayActivity extends AppCompatActivity {
     private EditText eventTitleEditText;
@@ -175,17 +185,58 @@ public class AddEventToDayActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "Error: No alert type selected", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    //                Adds event to database and ends activity
+                    saveEvent();
+
                     //                if saveTemplateToggleButton is toggled will save data
                     //                      to templates database
                     if (saveTemplateToggleState.equals(true)) {
                         saveEventTemplate();
                     }
-                    //                Adds event to database and ends activity
-                    saveEvent();
+
+//                    Gather data from notification
+                    String eventTimeAndDate = startTime + ", " + eventDate;
+                    long notificationDelay = eventDateConverter(eventTimeAndDate);
+
+                    if (alertType.equals("At time of event")) {
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        Log.e("notification delay: ", "" +notificationDelay);
+                    } else if (alertType == "Five minutes before event") {
+                        notificationDelay = notificationDelay - (5 * 60 * 1000);
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                    } else if (alertType == "Thirty minutes before event") {
+                        notificationDelay = notificationDelay - (30 * 60 * 1000);
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                    } else if (alertType == "One hour before event") {
+                        notificationDelay = notificationDelay - (60 * 60 * 1000);
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                    } else if (alertType == "One day before event") {
+                        notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                    } else if (alertType == "One week before event") {
+                        notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
+                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                    }
+
+
                     finish();
                 }
             }
         });
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private long eventDateConverter(String eventDate) {
+        Log.e("Date given", "" + eventDate);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
+        LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
+        long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        Log.e("event time in milis", "" + eventTimeInMillis);
+        long currentTime = System.currentTimeMillis();
+        Log.e("current time in millis", "" + currentTime);
+        long delay = eventTimeInMillis - currentTime;
+        Log.e("delay", "" + delay);
+        return delay;
     }
 
     private boolean onMenuItemOptionClick(MenuItem item) {
@@ -246,4 +297,26 @@ public class AddEventToDayActivity extends AppCompatActivity {
             }
     }
 
+
+    private Notification buildNotification(String title, String location, String eventDate) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
+        builder.setContentTitle(title);
+        builder.setContentText(location + ", " + eventDate);
+        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+        builder.setAutoCancel(true);
+        builder.setChannelId(NotificationChannelBuilder.CHANNEL_1_ID);
+        return builder.build();
+    }
+
+
+    private void scheduleNotification (Notification notification , long delay) {
+        Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
+        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION , notification) ;
+        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0, notificationIntent, PendingIntent. FLAG_UPDATE_CURRENT ) ;
+        long futureInMillis = SystemClock.elapsedRealtime () + delay ;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE ) ;
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent) ;
+    }
 }

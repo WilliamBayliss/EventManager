@@ -13,8 +13,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|left"
-        android:layout_marginLeft="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="50dp"
         android:id="@+id/add_event_to_day_button"
         app:srcCompat="@android:drawable/ic_input_add"/>
 

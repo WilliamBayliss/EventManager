@@ -82,6 +82,7 @@ public class EventListActivity extends AppCompatActivity {
             eventListAdapter.updateDayEventList(eventListAdapter.eventList, selectedDate);
             eventListAdapter.notifyDataSetChanged();
         }
+
     };
 
 }

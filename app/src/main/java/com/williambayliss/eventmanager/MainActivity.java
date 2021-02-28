@@ -47,6 +47,8 @@ public class MainActivity extends AppCompatActivity {
                 .allowMainThreadQueries()
                 .build();
 
+//        Creates Notification Channel
+
 
 //        Selects calendar and button from layout
         calendarView = findViewById(R.id.calendar_view);
@@ -65,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onSelectedDayChange(@NonNull CalendarView view, int year, int month, int dayOfMonth) {
                 month = month + 1;
-                String selectedDate = dayOfMonth + "/" + month + "/" + year;
+                String selectedDate = String.format("%02d/%02d/%04d" , dayOfMonth, month, year);
                 launchEventListActivity(selectedDate);
             }
         });
