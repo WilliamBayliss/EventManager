@@ -194,32 +194,43 @@ public class AddEventToDayActivity extends AppCompatActivity {
                         saveEventTemplate();
                     }
 
-//                    Gather data from notification
+//                    Gather time info for event
                     String eventTimeAndDate = startTime + ", " + eventDate;
+                    String eventEndTimeAndDate = endTime + ", " + eventDate;
                     long notificationDelay = eventDateConverter(eventTimeAndDate);
+                    long endTimeInMillis = eventDateConverter(eventEndTimeAndDate);
+//                    Checks that event is scheduled in the future
+//                    if eventDateConverter returns a negative, it means that the start time is
+//                    before the current time in millis
+                    if (notificationDelay < 0) {
+                        Toast.makeText(getApplicationContext(), "Error: Event scheduled in the past", Toast.LENGTH_SHORT).show();
+//                    If event end time value is smaller than start time value raises error
+                    } else if (notificationDelay > endTimeInMillis) {
+                        Toast.makeText(getApplicationContext(), "Error: Event ends before it begins", Toast.LENGTH_SHORT).show();
+                    } else {
+                        if (alertType.equals("At time of event")) {
+                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                            Log.e("notification delay: ", "" + notificationDelay);
+                        } else if (alertType == "Five minutes before event") {
+                            notificationDelay = notificationDelay - (5 * 60 * 1000);
+                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        } else if (alertType == "Thirty minutes before event") {
+                            notificationDelay = notificationDelay - (30 * 60 * 1000);
+                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        } else if (alertType == "One hour before event") {
+                            notificationDelay = notificationDelay - (60 * 60 * 1000);
+                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        } else if (alertType == "One day before event") {
+                            notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
+                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        } else if (alertType == "One week before event") {
+                            notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
+                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        }
 
-                    if (alertType.equals("At time of event")) {
-                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                        Log.e("notification delay: ", "" +notificationDelay);
-                    } else if (alertType == "Five minutes before event") {
-                        notificationDelay = notificationDelay - (5 * 60 * 1000);
-                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                    } else if (alertType == "Thirty minutes before event") {
-                        notificationDelay = notificationDelay - (30 * 60 * 1000);
-                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                    } else if (alertType == "One hour before event") {
-                        notificationDelay = notificationDelay - (60 * 60 * 1000);
-                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                    } else if (alertType == "One day before event") {
-                        notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
-                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                    } else if (alertType == "One week before event") {
-                        notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
-                        scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+
+                        finish();
                     }
-
-
-                    finish();
                 }
             }
         });
