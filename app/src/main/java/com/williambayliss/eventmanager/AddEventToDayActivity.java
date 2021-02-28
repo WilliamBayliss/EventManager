@@ -238,15 +238,11 @@ public class AddEventToDayActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private long eventDateConverter(String eventDate) {
-        Log.e("Date given", "" + eventDate);
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
         LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
         long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        Log.e("event time in milis", "" + eventTimeInMillis);
         long currentTime = System.currentTimeMillis();
-        Log.e("current time in millis", "" + currentTime);
         long delay = eventTimeInMillis - currentTime;
-        Log.e("delay", "" + delay);
         return delay;
     }
 
