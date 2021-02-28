@@ -255,6 +255,7 @@ public class NewEventActivity extends AppCompatActivity {
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     private long eventDateConverter(String eventDate) {
+//        Parses eventDate string into a long, gets current time as a long and subtracts the event date from current time
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
         LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
         long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
@@ -264,6 +265,7 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
     private void assignEventVariables() {
+//        Gets data from view and saves user entries to variables
         eventTitle = eventTitleEditText.getText().toString();
         eventLocation = eventLocationEditText.getText().toString();
         saveTemplateToggleState = saveTemplateToggle.isChecked();
@@ -315,6 +317,8 @@ public class NewEventActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1)
             if (resultCode == Activity.RESULT_OK) {
+//                After LoadTemplateActivity finishes, loads data from return Intent
+//                into textViews and variables
                 eventTitleEditText.setText(data.getStringExtra("TemplateTitle"));
                 eventLocationEditText.setText(data.getStringExtra("TemplateLocation"));
                 startTimeTextView.setText(data.getStringExtra("TemplateStartTime"));
@@ -323,7 +327,7 @@ public class NewEventActivity extends AppCompatActivity {
             }
     }
 
-
+//      Builds Notification
     private Notification buildNotification(String title, String location, String eventDate) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
         builder.setContentTitle(title);
@@ -334,7 +338,7 @@ public class NewEventActivity extends AppCompatActivity {
         return builder.build();
     }
 
-
+//     Schedules notification
     private void scheduleNotification (Notification notification , long delay) {
         Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
