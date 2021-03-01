@@ -29,7 +29,6 @@ import java.util.Locale;
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton newEventButton;
     CalendarView calendarView;
-    public static EventTemplateDatabase eventTemplateDatabase;
     public static EventDatabase eventDatabase;
 
     @Override
@@ -37,18 +36,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Creates Event Template Database
-        eventTemplateDatabase = Room.databaseBuilder(getApplicationContext(), EventTemplateDatabase.class, "EventTemplates")
-                .allowMainThreadQueries()
-                .build();
-
 //        Creates Event Database
         eventDatabase = Room.databaseBuilder(getApplicationContext(), EventDatabase.class, "Events")
                 .allowMainThreadQueries()
                 .build();
-
-//        Creates Notification Channel
-
 
 //        Selects calendar and button from layout
         calendarView = findViewById(R.id.calendar_view);

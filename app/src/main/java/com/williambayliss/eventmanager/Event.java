@@ -20,4 +20,6 @@ public class Event {
     public String endTime;
     @ColumnInfo(name = "Alert Type")
     public String alertType;
+    @ColumnInfo(name = "Template")
+    public boolean template;
 }

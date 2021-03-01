@@ -7,8 +7,8 @@ import java.util.List;
 
 @Dao
 public interface EventDao {
-    @Query("INSERT INTO Events (Title, Location, Date, `Start Time`, `End Time`, `Alert Type`) VALUES (:title, :location, :date, :startTime, :endTime, :alertType)")
-    void create(String title, String location, String date, String startTime, String endTime, String alertType);
+    @Query("INSERT INTO Events (Title, Location, Date, `Start Time`, `End Time`, `Alert Type`, Template) VALUES (:title, :location, :date, :startTime, :endTime, :alertType, :template)")
+    void create(String title, String location, String date, String startTime, String endTime, String alertType, boolean template);
 
     @Query("UPDATE Events SET Title = :title, Location = :location, Date = :date, `Start Time` = :startTime, `End Time` = :endTime, `Alert Type` = :alertType WHERE id = :id")
     void update(int id, String title, String location, String date, String startTime, String endTime, String alertType);
@@ -19,9 +19,10 @@ public interface EventDao {
     @Query("SELECT * FROM Events WHERE Date = :date ORDER BY `Start Time` ASC")
     List<Event> getDaysEvents(String date);
 
-    @Query("SELECT * FROM Events")
+    @Query("SELECT * FROM Events ORDER BY `Start Time` ASC")
     List<Event> getAllEvents();
 
-    @Query("SELECT id FROM EVENTS WHERE Title = :title AND Date = :date AND `Start Time` = :startTime")
-    int getEventID(String title, String date, String startTime);
+    @Query("SELECT * FROM Events WHERE Template == '1'")
+    List<Event> getAllTemplates();
+
 }

@@ -53,7 +53,7 @@ public class LoadTemplateActivity extends AppCompatActivity {
 //            updates recyclerView
             int position = viewHolder.getAdapterPosition();
             int id = loadTemplateAdapter.getItemID(position);
-            MainActivity.eventTemplateDatabase.eventTemplateDao().delete(id);
+            MainActivity.eventDatabase.eventDao().delete(id);
             loadTemplateAdapter.updateTemplates();
             loadTemplateAdapter.notifyDataSetChanged();
         }

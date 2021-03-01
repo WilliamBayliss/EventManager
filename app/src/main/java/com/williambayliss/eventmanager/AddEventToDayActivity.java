@@ -33,7 +33,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Locale;
 
-public class AddEventToDayActivity extends AppCompatActivity {
+public class AddEventToDayActivity extends NewEventActivity {
     private EditText eventTitleEditText;
     private EditText eventLocationEditText;
     private Button setDateButton;
@@ -188,11 +188,6 @@ public class AddEventToDayActivity extends AppCompatActivity {
                     //                Adds event to database and ends activity
                     saveEvent();
 
-                    //                if saveTemplateToggleButton is toggled will save data
-                    //                      to templates database
-                    if (saveTemplateToggleState.equals(true)) {
-                        saveEventTemplate();
-                    }
 
 //                    Gather time info for event
                     String eventTimeAndDate = startTime + ", " + eventDate;
@@ -236,15 +231,15 @@ public class AddEventToDayActivity extends AppCompatActivity {
         });
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.O)
-    private long eventDateConverter(String eventDate) {
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
-        LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
-        long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-        long currentTime = System.currentTimeMillis();
-        long delay = eventTimeInMillis - currentTime;
-        return delay;
-    }
+//    @RequiresApi(api = Build.VERSION_CODES.O)
+//    private long eventDateConverter(String eventDate) {
+//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
+//        LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
+//        long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+//        long currentTime = System.currentTimeMillis();
+//        long delay = eventTimeInMillis - currentTime;
+//        return delay;
+//    }
 
     private boolean onMenuItemOptionClick(MenuItem item) {
 //        Popup text to show which alert type has been saved
@@ -274,14 +269,10 @@ public class AddEventToDayActivity extends AppCompatActivity {
         }
     }
 
-    private void saveEventTemplate() {
-//        Adds entry to EventTemplate Database
-        MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, startTime, endTime, alertType);
-    }
 
     private void saveEvent() {
 //        Adds entry to Event Database
-        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
     }
 
     private void loadTemplate() {
@@ -304,26 +295,26 @@ public class AddEventToDayActivity extends AppCompatActivity {
             }
     }
 
+//
+//    private Notification buildNotification(String title, String location, String eventDate) {
+//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
+//        builder.setContentTitle(title);
+//        builder.setContentText(location + ", " + eventDate);
+//        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
+//        builder.setAutoCancel(true);
+//        builder.setChannelId(NotificationChannelBuilder.CHANNEL_1_ID);
+//        return builder.build();
+//    }
 
-    private Notification buildNotification(String title, String location, String eventDate) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
-        builder.setContentTitle(title);
-        builder.setContentText(location + ", " + eventDate);
-        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-        builder.setAutoCancel(true);
-        builder.setChannelId(NotificationChannelBuilder.CHANNEL_1_ID);
-        return builder.build();
-    }
-
-
-    private void scheduleNotification (Notification notification , long delay) {
-        Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION , notification) ;
-        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0, notificationIntent, PendingIntent. FLAG_UPDATE_CURRENT ) ;
-        long futureInMillis = SystemClock.elapsedRealtime () + delay ;
-        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE ) ;
-        assert alarmManager != null;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent) ;
-    }
+//
+//    private void scheduleNotification (Notification notification , long delay) {
+//        Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
+//        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
+//        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION , notification) ;
+//        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0, notificationIntent, PendingIntent. FLAG_UPDATE_CURRENT ) ;
+//        long futureInMillis = SystemClock.elapsedRealtime () + delay ;
+//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE ) ;
+//        assert alarmManager != null;
+//        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent) ;
+//    }
 }

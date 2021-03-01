@@ -207,10 +207,6 @@ public class NewEventActivity extends AppCompatActivity {
 //                    Saves Event to DB
                     saveEvent();
 
-//                    Saves template to DB if toggled
-                    if (saveTemplateToggleState.equals(true)) {
-                        saveEventTemplate();
-                    }
 
 //                    Get time info for event
                     String eventTimeAndDate = startTime + ", " + eventDate;
@@ -254,7 +250,7 @@ public class NewEventActivity extends AppCompatActivity {
         });
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private long eventDateConverter(String eventDate) {
+    public long eventDateConverter(String eventDate) {
 //        Parses eventDate string into a long, gets current time as a long and subtracts the event date from current time
         DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
         LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
@@ -264,7 +260,7 @@ public class NewEventActivity extends AppCompatActivity {
         return delay;
     }
 
-    private void assignEventVariables() {
+    public void assignEventVariables() {
 //        Gets data from view and saves user entries to variables
         eventTitle = eventTitleEditText.getText().toString();
         eventLocation = eventLocationEditText.getText().toString();
@@ -303,13 +299,9 @@ public class NewEventActivity extends AppCompatActivity {
         }
     }
 
-//    Saves EventTemplate to DB
-    private void saveEventTemplate() {
-            MainActivity.eventTemplateDatabase.eventTemplateDao().create(eventTitle, eventLocation, startTime, endTime, alertType);
-        }
 //        Saves Event to event db
     private void saveEvent() {
-        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
     }
 
     @Override
@@ -328,7 +320,7 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
 //      Builds Notification
-    private Notification buildNotification(String title, String location, String eventDate) {
+    public Notification buildNotification(String title, String location, String eventDate) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
         builder.setContentTitle(title);
         builder.setContentText(location + ", " + eventDate);
@@ -339,7 +331,7 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
 //     Schedules notification
-    private void scheduleNotification (Notification notification , long delay) {
+    public void scheduleNotification (Notification notification , long delay) {
         Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
         notificationIntent.putExtra(NotificationPublisher.NOTIFICATION , notification) ;
