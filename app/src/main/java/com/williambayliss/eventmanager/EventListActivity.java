@@ -2,8 +2,6 @@ package com.williambayliss.eventmanager;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class EventListActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     EventListAdapter eventListAdapter;
     private String selectedDate;
@@ -28,8 +25,8 @@ public class EventListActivity extends AppCompatActivity {
         Intent intent = getIntent();
         selectedDate = intent.getExtras().getString("selectedDate");
 
-        recyclerView = findViewById(R.id.event_list_recycler_view);
-        eventListAdapter = new EventListAdapter(getApplicationContext(), selectedDate);
+        RecyclerView recyclerView = findViewById(R.id.event_list_recycler_view);
+        eventListAdapter = new EventListAdapter(selectedDate);
         layoutManager = new LinearLayoutManager(this);
 
         recyclerView.setAdapter(eventListAdapter);
@@ -41,12 +38,7 @@ public class EventListActivity extends AppCompatActivity {
 //        Selects FloatingActionButton and adds onclick Listener
 //                to launch AddEventToDay Activity
         newEventButton = findViewById(R.id.add_event_to_day_button);
-        newEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                addEventToDay();
-            }
-        });
+        newEventButton.setOnClickListener(v -> addEventToDay());
 
 
     }
@@ -64,7 +56,11 @@ public class EventListActivity extends AppCompatActivity {
         startActivity(i);
     }
 
-    ItemTouchHelper.SimpleCallback simpleItemTouchCallBack = new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+    ItemTouchHelper.SimpleCallback simpleItemTouchCallBack =
+            new ItemTouchHelper.SimpleCallback(
+                    0,
+                    ItemTouchHelper.LEFT |
+                            ItemTouchHelper.RIGHT) {
         @Override
         public boolean onMove(@NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, @NonNull RecyclerView.ViewHolder target) {
             return false;
@@ -73,7 +69,10 @@ public class EventListActivity extends AppCompatActivity {
         @Override
         public void onSwiped(@NonNull RecyclerView.ViewHolder viewHolder, int direction) {
 //           Show popup text saying event deleted
-            Toast.makeText(getApplicationContext(), "Event Deleted", Toast.LENGTH_SHORT).show();
+            Toast.makeText(
+                    getApplicationContext(),
+                    "Event Deleted",
+                    Toast.LENGTH_SHORT).show();
 //           Get id of selected Event from list and delete it from DB
             int position = viewHolder.getAdapterPosition();
             int id = eventListAdapter.getEventID(position);

@@ -56,7 +56,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     public List<Event> eventList = new ArrayList<>();
 
 //    Initializes EventListAdapter
-    EventListAdapter(Context context, String selectedDate) {
+    EventListAdapter(String selectedDate) {
         loadDayEvents(selectedDate);
     }
 

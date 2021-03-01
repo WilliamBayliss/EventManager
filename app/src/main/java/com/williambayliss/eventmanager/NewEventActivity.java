@@ -11,15 +11,11 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -37,16 +33,10 @@ import java.util.Locale;
 public class NewEventActivity extends AppCompatActivity {
     private EditText eventTitleEditText;
     private EditText eventLocationEditText;
-    private Button setDateButton;
     private TextView setDateTextView;
-    private Button startTimeButton;
     private TextView startTimeTextView;
-    private Button endTimeButton;
     private TextView endTimeTextView;
-    private Button alertTypeButton;
     private ToggleButton saveTemplateToggle;
-    private Button loadTemplateButton;
-    private Button addToCalendarButton;
 
     private String eventTitle;
     private String eventLocation;
@@ -65,195 +55,259 @@ public class NewEventActivity extends AppCompatActivity {
         setContentView(R.layout.new_event_activity);
         eventTitleEditText = findViewById(R.id.event_title);
         eventLocationEditText = findViewById(R.id.event_location);
-        setDateButton = findViewById(R.id.date_button);
+        Button setDateButton = findViewById(R.id.date_button);
         setDateTextView = findViewById(R.id.set_date_text_view);
-        startTimeButton = findViewById(R.id.start_time_button);
+        Button startTimeButton = findViewById(R.id.start_time_button);
         startTimeTextView = findViewById(R.id.start_time_text_view);
-        endTimeButton = findViewById(R.id.end_time_button);
+        Button endTimeButton = findViewById(R.id.end_time_button);
         endTimeTextView = findViewById(R.id.end_time_text_view);
-        alertTypeButton = findViewById(R.id.alert_type_button);
+        Button alertTypeButton = findViewById(R.id.alert_type_button);
         saveTemplateToggle = findViewById(R.id.save_template_button);
-        loadTemplateButton = findViewById(R.id.load_from_template_button);
-        addToCalendarButton = findViewById(R.id.add_to_calendar_button);
+        Button loadTemplateButton = findViewById(R.id.load_from_template_button);
+        Button addToCalendarButton = findViewById(R.id.add_to_calendar_button);
 
 //        Launches DatePicker on button press
-        setDateButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View v) {
-                Calendar currentDate = Calendar.getInstance();
-                int year = currentDate.get(Calendar.YEAR);
-                int month = currentDate.get(Calendar.MONTH);
-                int day = currentDate.get(Calendar.DAY_OF_MONTH);
+        setDateButton.setOnClickListener(v -> {
+            Calendar currentDate = Calendar.getInstance();
+            int year = currentDate.get(Calendar.YEAR);
+            int month = currentDate.get(Calendar.MONTH);
+            int day = currentDate.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog datePicker;
-                datePicker = new DatePickerDialog(NewEventActivity.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int selectedYear, int selectedMonth, int selectedDayOfMonth) {
+            DatePickerDialog datePicker;
+            datePicker = new DatePickerDialog(
+                    NewEventActivity.this,
+                    (datePicker1, selectedYear, selectedMonth, selectedDayOfMonth) -> {
 //                        Selected month increased by 1 because starts counting at 0
-//                        & need correct month value for DB retreival elsewhere
-                        selectedMonth = selectedMonth + 1;
-                        setDateTextView.setText(String.format("%02d/%02d/%04d", selectedDayOfMonth, selectedMonth, selectedYear));
-                    }
-                }, year, month, day);
-                datePicker.setTitle("Select Date");
-                datePicker.show();
-            }
+//                        & need correct month value for DB retrieval elsewhere
+                selectedMonth = selectedMonth + 1;
+                setDateTextView.setText(
+                        String.format(
+                                Locale.CANADA,
+                                "%02d/%02d/%04d",
+                                selectedDayOfMonth,
+                                selectedMonth,
+                                selectedYear));
+            }, year, month, day);
+            datePicker.setTitle("Select Date");
+            datePicker.show();
         });
 
 //        Launches Timepicker on button press, sets user selection as Textview text
-        startTimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Calendar currentTime = Calendar.getInstance();
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
+        startTimeButton.setOnClickListener(v -> {
+            Calendar currentTime = Calendar.getInstance();
+            int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = currentTime.get(Calendar.MINUTE);
 
-                TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(NewEventActivity.this, android.R.style.Theme_Holo_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        startTimeTextView.setText(String.format("%02d:%02d", selectedHour,  selectedMinute));
-                    }
-                }, hour, minute, true);
-                timePickerDialog.setTitle("Select Start Time");
-                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                timePickerDialog.show();
-            }
+            TimePickerDialog timePickerDialog;
+            timePickerDialog = new TimePickerDialog(
+                    NewEventActivity.this,
+                    android.R.style.Theme_Holo_Dialog_NoActionBar,
+                    (timePicker, selectedHour, selectedMinute) -> startTimeTextView.setText(
+                        String.format(
+                            Locale.CANADA,
+                            "%02d:%02d",
+                            selectedHour,
+                            selectedMinute)), hour, minute, true);
+            timePickerDialog.setTitle("Select Start Time");
+            timePickerDialog
+                    .getWindow()
+                    .setBackgroundDrawableResource(
+                            android.R.color.transparent);
+            timePickerDialog.show();
         });
 
 //        Launches TimePicker on button press, sets user selection as Textview text
-        endTimeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        endTimeButton.setOnClickListener(v -> {
 //
-                Calendar currentTime = Calendar.getInstance();
-                int hour = currentTime.get(Calendar.HOUR_OF_DAY);
-                int minute = currentTime.get(Calendar.MINUTE);
+            Calendar currentTime = Calendar.getInstance();
+            int hour = currentTime.get(Calendar.HOUR_OF_DAY);
+            int minute = currentTime.get(Calendar.MINUTE);
 
-                TimePickerDialog timePickerDialog;
-                timePickerDialog = new TimePickerDialog(NewEventActivity.this, android.R.style.Theme_Holo_Dialog_NoActionBar, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        endTimeTextView.setText(String.format("%02d:%02d", selectedHour,  selectedMinute));
-                    }
-                }, hour, minute, true);
-                timePickerDialog.setTitle("Select End Time");
-                timePickerDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-                timePickerDialog.show();
-            }
+            TimePickerDialog timePickerDialog;
+            timePickerDialog = new TimePickerDialog(
+                    NewEventActivity.this,
+                    android.R.style.Theme_Holo_Dialog_NoActionBar,
+                    (timePicker, selectedHour, selectedMinute) -> endTimeTextView.setText(
+                            String.format(
+                                    Locale.CANADA,
+                                    "%02d:%02d",
+                                    selectedHour,
+                                    selectedMinute)),
+                    hour,
+                    minute,
+                    true);
+            timePickerDialog.setTitle("Select End Time");
+            timePickerDialog
+                    .getWindow()
+                    .setBackgroundDrawableResource(
+                            android.R.color.transparent);
+            timePickerDialog.show();
         });
 
 //        Launches popup menu to save selection as String alertType
-        alertTypeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                PopupMenu menu = new PopupMenu(getApplicationContext(), v);
-                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                    @Override
-                    public boolean onMenuItemClick(MenuItem item) {
-                        onMenuItemOptionClick(item);
-                        return false;
-                    }
-                });
-                menu.inflate(R.menu.alert_popup_menu);
-                menu.show();
-            }
+        alertTypeButton.setOnClickListener(v -> {
+            PopupMenu menu = new PopupMenu(getApplicationContext(), v);
+            menu.setOnMenuItemClickListener(item -> {
+                onMenuItemOptionClick(item);
+                return false;
+            });
+            menu.inflate(R.menu.alert_popup_menu);
+            menu.show();
         });
 
 //        Launches LoadTemplateActivity on button press
-        loadTemplateButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), LoadTemplateActivity.class);
-                startActivityForResult(intent, 1);
-            }
+        loadTemplateButton.setOnClickListener(v -> {
+            Intent intent = new Intent(
+                                getApplicationContext(),
+                                LoadTemplateActivity.class);
+
+            startActivityForResult(intent, 1);
         });
 
-        addToCalendarButton.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View v) {
+        addToCalendarButton.setOnClickListener(v -> {
 //                Gets data DB entry
-                assignEventVariables();
+            assignEventVariables();
 //                This logic ensures that no fields left blank
-                if (eventTitle.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Error: Title field empty", Toast.LENGTH_SHORT).show();
-                }
-                else if (eventLocation.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Error: Location field empty", Toast.LENGTH_SHORT).show();
-                }
-                else if (eventDate.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Error: No date", Toast.LENGTH_SHORT).show();
-                }
-                else if (startTime.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Error: No start time", Toast.LENGTH_SHORT).show();
-                }
-                else if (endTime.length() == 0) {
-                    Toast.makeText(getApplicationContext(), "Error: No end time", Toast.LENGTH_SHORT).show();
-                }
-                else if (alertType.isEmpty()) {
-                    Toast.makeText(getApplicationContext(), "Error: No alert type selected", Toast.LENGTH_SHORT).show();
-                } else {
+            if (eventTitle.length() == 0) {
+                Toast.makeText(getApplicationContext(),
+                        "Error: Title field empty",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else if (eventLocation.length() == 0) {
+                Toast.makeText(getApplicationContext(),
+                        "Error: Location field empty",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else if (eventDate.length() == 0) {
+                Toast.makeText(getApplicationContext(),
+                        "Error: No date",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else if (startTime.length() == 0) {
+                Toast.makeText(getApplicationContext(),
+                        "Error: No start time",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else if (endTime.length() == 0) {
+                Toast.makeText(getApplicationContext(),
+                        "Error: No end time",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            }
+            else if (alertType.isEmpty()) {
+                Toast.makeText(getApplicationContext(),
+                        "Error: No alert type selected",
+                        Toast.LENGTH_SHORT)
+                        .show();
+            } else {
 //                    Saves Event to DB
-                    saveEvent();
+                saveEvent();
 
 
 //                    Get time info for event
-                    String eventTimeAndDate = startTime + ", " + eventDate;
-                    String eventEndTimeAndDate = endTime + ", " + eventDate;
-                    long notificationDelay = eventDateConverter(eventTimeAndDate);
-                    long endTimeInMillis = eventDateConverter(eventEndTimeAndDate);
+                String eventTimeAndDate = startTime + ", " + eventDate;
+                String eventEndTimeAndDate = endTime + ", " + eventDate;
+                long notificationDelay = eventDateConverter(eventTimeAndDate);
+                long endTimeInMillis = eventDateConverter(eventEndTimeAndDate);
 //                    Checks that event is scheduled in the future
 //                    if eventDateConverter returns a negative, it means that the start time is
 //                    before the current time in millis
-                    if (notificationDelay < 0) {
-                        Toast.makeText(getApplicationContext(), "Error: Event scheduled in the past", Toast.LENGTH_SHORT).show();
+                if (notificationDelay < 0) {
+                    Toast.makeText(getApplicationContext(),
+                            "Error: Event scheduled in the past",
+                            Toast.LENGTH_SHORT)
+                            .show();
 //                    If event end time value is smaller than start time value raises error
-                    } else if (notificationDelay > endTimeInMillis) {
-                        Toast.makeText(getApplicationContext(), "Error: Event ends before it begins", Toast.LENGTH_SHORT).show();
-                    } else {
+                } else if (notificationDelay > endTimeInMillis) {
+                    Toast.makeText(getApplicationContext(),
+                            "Error: Event ends before it begins",
+                            Toast.LENGTH_SHORT)
+                            .show();
+                } else {
 //                    Schedules notification on a delay based on alertType value
-                        switch (alertType) {
-                            case "At time of event":
-                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                                Log.e("notification delay: ", "" + notificationDelay);
-                                break;
-                            case "Five minutes before event":
-                                notificationDelay = notificationDelay - (5 * 60 * 1000);
-                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                                break;
-                            case "Thirty minutes before event":
-                                notificationDelay = notificationDelay - (30 * 60 * 1000);
-                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                                break;
-                            case "One hour before event":
-                                notificationDelay = notificationDelay - (60 * 60 * 1000);
-                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                                break;
-                            case "One day before event":
-                                notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
-                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                                break;
-                            case "One week before event":
-                                notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
-                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                    switch (alertType) {
+                        case "At time of event":
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
+                            break;
+                        case "Five minutes before event":
+                            notificationDelay = notificationDelay - (5 * 60 * 1000);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
+                            break;
+                        case "Thirty minutes before event":
+                            notificationDelay = notificationDelay - (30 * 60 * 1000);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
+                            break;
+                        case "One hour before event":
+                            notificationDelay = notificationDelay - (60 * 60 * 1000);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
+                            break;
+                        case "One day before event":
+                            notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
+                            break;
+                        case "One week before event":
+                            notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
 
-                                break;
-                        }
-                        finish();
+                            break;
                     }
+                    finish();
                 }
             }
         });
     }
     @RequiresApi(api = Build.VERSION_CODES.O)
     public long eventDateConverter(String eventDate) {
-//        Parses eventDate string into a long, gets current time as a long and subtracts the event date from current time
-        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
+//      Creates DateTimeFormatter to take in time/date from String
+        DateTimeFormatter dateTimeFormatter =
+                DateTimeFormatter.ofPattern(
+                        "HH:mm, dd/MM/yyyy",
+                        Locale.CANADA);
+//      Parses the eventDate
         LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
-        long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+//      Gets exact time of event from epoch in millis
+        long eventTimeInMillis =
+                date.atZone(
+                        ZoneId.systemDefault())
+                        .toInstant()
+                        .toEpochMilli();
+//      gets current time from epoch in millis
         long currentTime = System.currentTimeMillis();
+//      returns the difference, which will be the required delay for notification
         return eventTimeInMillis - currentTime;
     }
 
@@ -270,7 +324,10 @@ public class NewEventActivity extends AppCompatActivity {
 
     private void onMenuItemOptionClick(MenuItem item) {
 //        Popup text to show which item selected
-        Toast.makeText(this, "Selected item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this,
+                "Selected item: " + item.getTitle(),
+                Toast.LENGTH_SHORT)
+                .show();
 //        Handles item selection, saves selection as String alertType
         switch (item.getItemId()) {
             case R.id.timeOfEvent:
@@ -292,7 +349,17 @@ public class NewEventActivity extends AppCompatActivity {
 
 //        Saves Event to event db
     private void saveEvent() {
-        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
+        MainActivity
+                .eventDatabase
+                .eventDao()
+                .create(
+                        eventTitle,
+                        eventLocation,
+                        eventDate,
+                        startTime,
+                        endTime,
+                        alertType,
+                        saveTemplateToggleState);
     }
 
     @Override
@@ -302,17 +369,26 @@ public class NewEventActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
 //                After LoadTemplateActivity finishes, loads data from return Intent
 //                into textViews and variables
-                eventTitleEditText.setText(data.getStringExtra("TemplateTitle"));
-                eventLocationEditText.setText(data.getStringExtra("TemplateLocation"));
-                startTimeTextView.setText(data.getStringExtra("TemplateStartTime"));
-                endTimeTextView.setText(data.getStringExtra("TemplateEndTime"));
+                assert data != null;
+                eventTitleEditText.setText(
+                        data.getStringExtra("TemplateTitle"));
+                eventLocationEditText.setText(
+                        data.getStringExtra("TemplateLocation"));
+                startTimeTextView.setText(
+                        data.getStringExtra("TemplateStartTime"));
+                endTimeTextView.setText(
+                        data.getStringExtra("TemplateEndTime"));
+
                 alertType = data.getStringExtra("TemplateAlertType");
             }
     }
 
 //      Builds Notification
     public Notification buildNotification(String title, String location, String eventDate) {
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(
+                        this,
+                        NotificationChannelBuilder.CHANNEL_1_ID);
         builder.setContentTitle(title);
         builder.setContentText(location + ", " + eventDate);
         builder.setSmallIcon(R.drawable.ic_launcher_foreground);
@@ -323,13 +399,37 @@ public class NewEventActivity extends AppCompatActivity {
 
 //     Schedules notification
     public void scheduleNotification (Notification notification , long delay) {
-        Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
-        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION , notification) ;
-        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0, notificationIntent, PendingIntent. FLAG_UPDATE_CURRENT ) ;
+//        Creates intent for NotificationPublisher
+        Intent notificationIntent =
+                new Intent(
+                        this,
+                        NotificationPublisher.class );
+//        Puts intent data into intent
+        notificationIntent
+                .putExtra(
+                        NotificationPublisher.NOTIFICATION_ID ,
+                        1 );
+//        Puts notification into intent
+        notificationIntent
+                .putExtra(
+                        NotificationPublisher.NOTIFICATION ,
+                        notification) ;
+//        Gets pendingIntent
+        PendingIntent pendingIntent =
+                PendingIntent
+                        .getBroadcast (
+                                this,
+                                0, notificationIntent,
+                                PendingIntent.
+                                        FLAG_UPDATE_CURRENT);
+//        Adds delay to current time to schedule notification
         long futureInMillis = SystemClock.elapsedRealtime () + delay ;
+//        Creates AlarmManager and sets alarm for notification
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE ) ;
         assert alarmManager != null;
-        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent) ;
+        alarmManager.set(
+                AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                futureInMillis,
+                pendingIntent);
     }
 }

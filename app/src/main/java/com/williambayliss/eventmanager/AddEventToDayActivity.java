@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
@@ -257,6 +256,7 @@ public class AddEventToDayActivity extends NewEventActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1)
             if (resultCode == Activity.RESULT_OK) {
+                assert data != null;
                 eventTitleEditText.setText(data.getStringExtra("TemplateTitle"));
                 eventLocationEditText.setText(data.getStringExtra("TemplateLocation"));
                 startTimeTextView.setText(data.getStringExtra("TemplateStartTime"));
