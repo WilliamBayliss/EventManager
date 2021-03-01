@@ -166,8 +166,6 @@ public class AddEventToDayActivity extends NewEventActivity {
                 Toast.makeText(getApplicationContext(), "Error: No alert type selected", Toast.LENGTH_SHORT).show();
             }
             else {
-                //                Adds event to database and ends activity
-                saveEvent();
 
 
 //                    Gather time info for event
@@ -186,31 +184,62 @@ public class AddEventToDayActivity extends NewEventActivity {
                 } else {
                     switch (alertType) {
                         case "At time of event":
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                            Log.e("notification delay: ", "" + notificationDelay);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
                             break;
                         case "Five minutes before event":
                             notificationDelay = notificationDelay - (5 * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
                             break;
                         case "Thirty minutes before event":
                             notificationDelay = notificationDelay - (30 * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
                             break;
                         case "One hour before event":
                             notificationDelay = notificationDelay - (60 * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
                             break;
                         case "One day before event":
                             notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
                             break;
                         case "One week before event":
                             notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                            scheduleNotification(
+                                    buildNotification(
+                                            eventTitle,
+                                            eventLocation,
+                                            eventTimeAndDate),
+                                    notificationDelay);
                             break;
                     }
 
+                    //                Adds event to database and ends activity
+                    saveEvent();
 
                     finish();
                 }
@@ -225,18 +254,22 @@ public class AddEventToDayActivity extends NewEventActivity {
         switch (item.getItemId()) {
             case R.id.timeOfEvent:
                 alertType = "At time of event";
+                break;
             case R.id.fiveMinsBeforeEvent:
                 alertType = "Five minutes before event";
+                break;
             case R.id.halfHourBeforeEvent:
                 alertType = "Thirty minutes before event";
+                break;
             case R.id.hourBeforeEvent:
                 alertType = "One hour before event";
+                break;
             case R.id.oneDayBeforeEvent:
                 alertType = "One day before event";
+                break;
             case R.id.oneWeekBeforeEvent:
                 alertType = "One week before event";
-            default:
-                alertType = "";
+                break;
         }
     }
 

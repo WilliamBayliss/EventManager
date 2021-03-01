@@ -204,8 +204,6 @@ public class NewEventActivity extends AppCompatActivity {
                         Toast.LENGTH_SHORT)
                         .show();
             } else {
-//                    Saves Event to DB
-                saveEvent();
 
 
 //                    Get time info for event
@@ -285,6 +283,10 @@ public class NewEventActivity extends AppCompatActivity {
 
                             break;
                     }
+
+//                    Saves Event to DB
+                    saveEvent();
+
                     finish();
                 }
             }
@@ -332,18 +334,22 @@ public class NewEventActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.timeOfEvent:
                 alertType = "At time of event";
+                break;
             case R.id.fiveMinsBeforeEvent:
                 alertType = "Five minutes before event";
+                break;
             case R.id.halfHourBeforeEvent:
                 alertType = "Thirty minutes before event";
+                break;
             case R.id.hourBeforeEvent:
                 alertType = "One hour before event";
+                break;
             case R.id.oneDayBeforeEvent:
                 alertType = "One day before event";
+                break;
             case R.id.oneWeekBeforeEvent:
                 alertType = "One week before event";
-            default:
-                alertType = "";
+                break;
         }
     }
 
