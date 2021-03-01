@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,18 +28,10 @@ import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.ZoneId;
-import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class NewEventActivity extends AppCompatActivity {
@@ -223,25 +214,32 @@ public class NewEventActivity extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Error: Event ends before it begins", Toast.LENGTH_SHORT).show();
                     } else {
 //                    Schedules notification on a delay based on alertType value
-                        if (alertType.equals("At time of event")) {
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                            Log.e("notification delay: ", "" + notificationDelay);
-                        } else if (alertType == "Five minutes before event") {
-                            notificationDelay = notificationDelay - (5 * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                        } else if (alertType == "Thirty minutes before event") {
-                            notificationDelay = notificationDelay - (30 * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                        } else if (alertType == "One hour before event") {
-                            notificationDelay = notificationDelay - (60 * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                        } else if (alertType == "One day before event") {
-                            notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
-                        } else if (alertType == "One week before event") {
-                            notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
-                            scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                        switch (alertType) {
+                            case "At time of event":
+                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                                Log.e("notification delay: ", "" + notificationDelay);
+                                break;
+                            case "Five minutes before event":
+                                notificationDelay = notificationDelay - (5 * 60 * 1000);
+                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                                break;
+                            case "Thirty minutes before event":
+                                notificationDelay = notificationDelay - (30 * 60 * 1000);
+                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                                break;
+                            case "One hour before event":
+                                notificationDelay = notificationDelay - (60 * 60 * 1000);
+                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                                break;
+                            case "One day before event":
+                                notificationDelay = notificationDelay - ((60 * 24) * 60 * 1000);
+                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
+                                break;
+                            case "One week before event":
+                                notificationDelay = notificationDelay - (((60 * 24) * 7) * 60 * 1000);
+                                scheduleNotification(buildNotification(eventTitle, eventLocation, eventTimeAndDate), notificationDelay);
 
+                                break;
                         }
                         finish();
                     }
@@ -256,8 +254,7 @@ public class NewEventActivity extends AppCompatActivity {
         LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
         long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
         long currentTime = System.currentTimeMillis();
-        long delay = eventTimeInMillis - currentTime;
-        return delay;
+        return eventTimeInMillis - currentTime;
     }
 
     public void assignEventVariables() {
@@ -271,31 +268,25 @@ public class NewEventActivity extends AppCompatActivity {
     }
 
 
-    private boolean onMenuItemOptionClick(MenuItem item) {
+    private void onMenuItemOptionClick(MenuItem item) {
 //        Popup text to show which item selected
         Toast.makeText(this, "Selected item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
 //        Handles item selection, saves selection as String alertType
         switch (item.getItemId()) {
             case R.id.timeOfEvent:
                 alertType = "At time of event";
-                return true;
             case R.id.fiveMinsBeforeEvent:
                 alertType = "Five minutes before event";
-                return true;
             case R.id.halfHourBeforeEvent:
                 alertType = "Thirty minutes before event";
-                return true;
             case R.id.hourBeforeEvent:
                 alertType = "One hour before event";
-                return true;
             case R.id.oneDayBeforeEvent:
                 alertType = "One day before event";
-                return true;
             case R.id.oneWeekBeforeEvent:
                 alertType = "One week before event";
-                return true;
             default:
-                return false;
+                alertType = "";
         }
     }
 

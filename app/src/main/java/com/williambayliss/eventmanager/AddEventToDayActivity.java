@@ -231,16 +231,6 @@ public class AddEventToDayActivity extends NewEventActivity {
         });
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.O)
-//    private long eventDateConverter(String eventDate) {
-//        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm, dd/MM/yyyy", Locale.CANADA);
-//        LocalDateTime date = LocalDateTime.parse(eventDate, dateTimeFormatter);
-//        long eventTimeInMillis = date.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
-//        long currentTime = System.currentTimeMillis();
-//        long delay = eventTimeInMillis - currentTime;
-//        return delay;
-//    }
-
     private boolean onMenuItemOptionClick(MenuItem item) {
 //        Popup text to show which alert type has been saved
         Toast.makeText(this, "Selected item: " + item.getTitle(), Toast.LENGTH_SHORT).show();
@@ -269,7 +259,6 @@ public class AddEventToDayActivity extends NewEventActivity {
         }
     }
 
-
     private void saveEvent() {
 //        Adds entry to Event Database
         MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
@@ -295,26 +284,4 @@ public class AddEventToDayActivity extends NewEventActivity {
             }
     }
 
-//
-//    private Notification buildNotification(String title, String location, String eventDate) {
-//        NotificationCompat.Builder builder = new NotificationCompat.Builder(this, NotificationChannelBuilder.CHANNEL_1_ID);
-//        builder.setContentTitle(title);
-//        builder.setContentText(location + ", " + eventDate);
-//        builder.setSmallIcon(R.drawable.ic_launcher_foreground);
-//        builder.setAutoCancel(true);
-//        builder.setChannelId(NotificationChannelBuilder.CHANNEL_1_ID);
-//        return builder.build();
-//    }
-
-//
-//    private void scheduleNotification (Notification notification , long delay) {
-//        Intent notificationIntent = new Intent( this, NotificationPublisher.class ) ;
-//        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION_ID , 1 ) ;
-//        notificationIntent.putExtra(NotificationPublisher.NOTIFICATION , notification) ;
-//        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0, notificationIntent, PendingIntent. FLAG_UPDATE_CURRENT ) ;
-//        long futureInMillis = SystemClock.elapsedRealtime () + delay ;
-//        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE ) ;
-//        assert alarmManager != null;
-//        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent) ;
-//    }
 }

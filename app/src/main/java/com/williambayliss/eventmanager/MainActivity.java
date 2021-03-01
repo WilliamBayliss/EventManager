@@ -1,30 +1,15 @@
 package com.williambayliss.eventmanager;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CalendarView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     FloatingActionButton newEventButton;
