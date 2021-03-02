@@ -200,6 +200,9 @@ public class AddEventToDayActivity extends NewEventActivity {
                             .show();
                 } else {
                     switch (alertType) {
+//                        Case statement will subtract the # of milliseconds represented by the alert type
+//                                (i.e 5 minutes is 300000 milliseconds)
+//                        from the timing of the event, and then schedule a notification at that time
                         case "At time of event":
                             scheduleNotification(
                                     buildNotification(
@@ -256,10 +259,30 @@ public class AddEventToDayActivity extends NewEventActivity {
                     }
 
 //                    Checks whether an event with the exact same data already exists
-                    int doesEventExistCheck = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+                    int doesEventExistCheck = MainActivity.eventDatabase.eventDao()
+                            .getEventID(
+                                    eventTitle,
+                                    eventLocation,
+                                    eventDate,
+                                    startTime,
+                                    endTime,
+                                    alertType);
 //                    Checks whether an event with the exact same data but with null date value
-                    int doesEventExistNullDateCheck = MainActivity.eventDatabase.eventDao().checkNullDate(eventTitle, eventLocation,startTime, endTime, alertType);
-                    int duplicateTemplateCheck = MainActivity.eventDatabase.eventDao().checkDuplicateTemplate(eventTitle, eventLocation,startTime, endTime, alertType);
+                    int doesEventExistNullDateCheck = MainActivity.eventDatabase.eventDao()
+                            .checkNullDate(
+                                    eventTitle,
+                                    eventLocation,
+                                    startTime,
+                                    endTime,
+                                    alertType);
+//                    Checks whether a template with the same data already exists
+                    int duplicateTemplateCheck = MainActivity.eventDatabase.eventDao()
+                            .checkDuplicateTemplate(
+                                    eventTitle,
+                                    eventLocation,
+                                    startTime,
+                                    endTime,
+                                    alertType);
 //                    If event already exists as entered, raise error saying event already exists
                     if (doesEventExistCheck != 0) {
                         Toast.makeText(getApplicationContext(),
@@ -268,18 +291,39 @@ public class AddEventToDayActivity extends NewEventActivity {
                                 .show();
 //                        If Event exists but with null date entry, update date entry to selected date
                     } else if (doesEventExistNullDateCheck != 0) {
-                        MainActivity.eventDatabase.eventDao().update(doesEventExistNullDateCheck, eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
+                        MainActivity.eventDatabase.eventDao()
+                                .update(
+                                        doesEventExistNullDateCheck,
+                                        eventTitle,
+                                        eventLocation,
+                                        eventDate,
+                                        startTime,
+                                        endTime,
+                                        alertType,
+                                        saveTemplateToggleState);
 
                         finish();
                     } else if (duplicateTemplateCheck == 1) {
+//                        Notifies user that template not saved
                         Toast.makeText(this,
                                 "Template already exists",
                                 Toast.LENGTH_SHORT).show();
-                        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType, false);
+//                        Inserts new event into database with template value of false
+                        MainActivity.eventDatabase.eventDao()
+                                .create(
+                                        eventTitle,
+                                        eventLocation,
+                                        eventDate,
+                                        startTime,
+                                        endTime,
+                                        alertType,
+                                        false);
+//                        ends activity
                         finish();
                     } else {
 //                        Saves Event to DB
                         saveEvent();
+//                        ends activity
                         finish();
                     }
 
