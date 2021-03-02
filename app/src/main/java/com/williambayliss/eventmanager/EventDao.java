@@ -45,4 +45,7 @@ public interface EventDao {
 
     @Query("SELECT id FROM Events WHERE Title = :title AND Location = :location AND Date IS NULL AND `Start Time` = :startTime AND `End Time` = :endTime AND `Alert Type` = :alertType")
     int checkNullDate(String title, String location, String startTime, String endTime, String alertType);
+
+    @Query("SELECT Template FROM Events WHERE Title = :title AND Location = :location AND `End Time` = :endTime AND `Start Time` = :startTime AND `Alert Type` = :alertType")
+    int checkDuplicateTemplate(String title, String location, String startTime, String endTime, String alertType);
 }

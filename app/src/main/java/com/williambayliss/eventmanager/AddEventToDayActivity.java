@@ -141,22 +141,40 @@ public class AddEventToDayActivity extends NewEventActivity {
             endTime = endTimeTextView.getText().toString();
 
             if (eventTitle.length() == 0) {
-                Toast.makeText(getApplicationContext(), "Error: Title field empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "Title field empty",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
             else if (eventLocation.length() == 0) {
-                Toast.makeText(getApplicationContext(), "Error: Location field empty", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "Location field empty",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
             else if (eventDate.length() == 0) {
-                Toast.makeText(getApplicationContext(), "Error: No date", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "No date",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
             else if (startTime.length() == 0) {
-                Toast.makeText(getApplicationContext(), "Error: No start time", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "No start time",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
             else if (endTime.length() == 0) {
-                Toast.makeText(getApplicationContext(), "Error: No end time", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "No end time",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
             else if (alertType.isEmpty()) {
-                Toast.makeText(getApplicationContext(), "Error: No alert type selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(),
+                        "No alert type selected",
+                        Toast.LENGTH_SHORT)
+                        .show();
             }
             else {
 
@@ -170,10 +188,16 @@ public class AddEventToDayActivity extends NewEventActivity {
 //                    if eventDateConverter returns a negative, it means that the start time is
 //                    before the current time in millis
                 if (notificationDelay < 0) {
-                    Toast.makeText(getApplicationContext(), "Error: Event scheduled in the past", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Event scheduled in the past",
+                            Toast.LENGTH_SHORT)
+                            .show();
 //                    If event end time value is smaller than start time value raises error
                 } else if (notificationDelay > endTimeInMillis) {
-                    Toast.makeText(getApplicationContext(), "Error: Event ends before it begins", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(),
+                            "Event ends before it begins",
+                            Toast.LENGTH_SHORT)
+                            .show();
                 } else {
                     switch (alertType) {
                         case "At time of event":
@@ -235,16 +259,23 @@ public class AddEventToDayActivity extends NewEventActivity {
                     int doesEventExistCheck = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
 //                    Checks whether an event with the exact same data but with null date value
                     int doesEventExistNullDateCheck = MainActivity.eventDatabase.eventDao().checkNullDate(eventTitle, eventLocation,startTime, endTime, alertType);
+                    int duplicateTemplateCheck = MainActivity.eventDatabase.eventDao().checkDuplicateTemplate(eventTitle, eventLocation,startTime, endTime, alertType);
 //                    If event already exists as entered, raise error saying event already exists
                     if (doesEventExistCheck != 0) {
                         Toast.makeText(getApplicationContext(),
-                                "Event already exists at that time",
+                                "Event already exists",
                                 Toast.LENGTH_SHORT)
                                 .show();
 //                        If Event exists but with null date entry, update date entry to selected date
                     } else if (doesEventExistNullDateCheck != 0) {
                         MainActivity.eventDatabase.eventDao().update(doesEventExistNullDateCheck, eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
 
+                        finish();
+                    } else if (duplicateTemplateCheck == 1) {
+                        Toast.makeText(this,
+                                "Template already exists",
+                                Toast.LENGTH_SHORT).show();
+                        MainActivity.eventDatabase.eventDao().create(eventTitle, eventLocation, eventDate, startTime, endTime, alertType, false);
                         finish();
                     } else {
 //                        Saves Event to DB

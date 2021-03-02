@@ -167,37 +167,37 @@ public class NewEventActivity extends AppCompatActivity {
 //                This logic ensures that no fields left blank
             if (eventTitle.length() == 0) {
                 Toast.makeText(getApplicationContext(),
-                        "Error: Title field empty",
+                        "Title field empty",
                         Toast.LENGTH_SHORT)
                         .show();
             }
             else if (eventLocation.length() == 0) {
                 Toast.makeText(getApplicationContext(),
-                        "Error: Location field empty",
+                        "Location field empty",
                         Toast.LENGTH_SHORT)
                         .show();
             }
             else if (eventDate.length() == 0) {
                 Toast.makeText(getApplicationContext(),
-                        "Error: No date",
+                        "No date",
                         Toast.LENGTH_SHORT)
                         .show();
             }
             else if (startTime.length() == 0) {
                 Toast.makeText(getApplicationContext(),
-                        "Error: No start time",
+                        "No start time",
                         Toast.LENGTH_SHORT)
                         .show();
             }
             else if (endTime.length() == 0) {
                 Toast.makeText(getApplicationContext(),
-                        "Error: No end time",
+                        "No end time",
                         Toast.LENGTH_SHORT)
                         .show();
             }
             else if (alertType.isEmpty()) {
                 Toast.makeText(getApplicationContext(),
-                        "Error: No alert type selected",
+                        "No alert type selected",
                         Toast.LENGTH_SHORT)
                         .show();
             } else {
@@ -283,19 +283,25 @@ public class NewEventActivity extends AppCompatActivity {
 //                    Checks whether an event with the exact same data already exists
                     int doesEventExistCheck = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
 //                    Checks whether an event with the exact same data but with null date value
-                    int doesEventExistNullDateCheck = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventLocation, null,startTime, endTime, alertType);
+                    int doesEventExistNullDateCheck = MainActivity.eventDatabase.eventDao().checkNullDate(eventTitle, eventLocation,startTime, endTime, alertType);
+                    int duplicateTemplateCheck = MainActivity.eventDatabase.eventDao().checkDuplicateTemplate(eventTitle, eventLocation,startTime, endTime, alertType);
 //                    If event already exists as entered, raise error saying event already exists
                     if (doesEventExistCheck != 0) {
                         Toast.makeText(getApplicationContext(),
-                                "Event already exists at that time",
+                                "Event already exists",
                                 Toast.LENGTH_SHORT)
                                 .show();
 //                        If Event exists but with null date entry, update date entry to selected date
                     } else if (doesEventExistNullDateCheck != 0) {
                         MainActivity.eventDatabase.eventDao().update(doesEventExistNullDateCheck, eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
+
+                        finish();
+                    } else if (duplicateTemplateCheck == 1) {
+                        Toast.makeText(this, "Template already exists", Toast.LENGTH_SHORT).show();
                     } else {
 //                        Saves Event to DB
                         saveEvent();
+                        finish();
                     }
                     finish();
                 }
