@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 
@@ -123,11 +122,11 @@ public class AddEventToDayActivity extends NewEventActivity {
                         menu.show();
                     });
 
-        //            This function launches LoadTemplateActivity on loadFromTemplates butn click
+        //            This function launches LoadTemplateActivity on loadFromTemplates button click
         loadFromTemplates.setOnClickListener(v -> loadTemplate());
 
         addToCalendarButton.setOnClickListener(v -> {
-//                Saves data to variables for columninfo entries
+//                Saves data to variables for columnInfo entries
             eventTitle = eventTitleEditText.getText().toString();
             eventLocation = eventLocationEditText.getText().toString();
             saveTemplateToggleState = saveTemplateToggle.isChecked();
