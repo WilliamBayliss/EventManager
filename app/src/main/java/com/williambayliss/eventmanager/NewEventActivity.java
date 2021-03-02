@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
@@ -154,13 +155,15 @@ public class NewEventActivity extends AppCompatActivity {
             Intent intent = new Intent(
                                 getApplicationContext(),
                                 LoadTemplateActivity.class);
-
             startActivityForResult(intent, 1);
         });
 
         addToCalendarButton.setOnClickListener(v -> {
-//                Gets data DB entry
+
+//                assigns entered values to variables
             assignEventVariables();
+
+
 //                This logic ensures that no fields left blank
             if (eventTitle.length() == 0) {
                 Toast.makeText(getApplicationContext(),
@@ -277,10 +280,23 @@ public class NewEventActivity extends AppCompatActivity {
 
                             break;
                     }
-
-//                    Saves Event to DB
-                    saveEvent();
-
+//                    Checks whether an event with the exact same data already exists
+                    int doesEventExistCheck = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+//                    Checks whether an event with the exact same data but with null date value
+                    int doesEventExistNullDateCheck = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventLocation, null,startTime, endTime, alertType);
+//                    If event already exists as entered, raise error saying event already exists
+                    if (doesEventExistCheck != 0) {
+                        Toast.makeText(getApplicationContext(),
+                                "Event already exists at that time",
+                                Toast.LENGTH_SHORT)
+                                .show();
+//                        If Event exists but with null date entry, update date entry to selected date
+                    } else if (doesEventExistNullDateCheck != 0) {
+                        MainActivity.eventDatabase.eventDao().update(doesEventExistNullDateCheck, eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
+                    } else {
+//                        Saves Event to DB
+                        saveEvent();
+                    }
                     finish();
                 }
             }
@@ -378,7 +394,6 @@ public class NewEventActivity extends AppCompatActivity {
                         data.getStringExtra("TemplateStartTime"));
                 endTimeTextView.setText(
                         data.getStringExtra("TemplateEndTime"));
-
                 alertType = data.getStringExtra("TemplateAlertType");
             }
     }

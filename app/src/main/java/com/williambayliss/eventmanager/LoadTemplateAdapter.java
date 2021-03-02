@@ -52,6 +52,9 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
             intent.putExtra("TemplateStartTime", templateStartTimeTextView.getText());
             intent.putExtra("TemplateEndTime", templateEndTimeTextView.getText());
             intent.putExtra("TemplateAlertType", templateAlertTypeTextView.getText());
+
+
+
 //            Sets resultCode to OK and finishes Activity, passing data back to NewEventList activity
             ((Activity)context).setResult(Activity.RESULT_OK, intent);
             ((Activity)context).finish();

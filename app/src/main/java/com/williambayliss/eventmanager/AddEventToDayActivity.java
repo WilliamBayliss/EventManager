@@ -231,10 +231,27 @@ public class AddEventToDayActivity extends NewEventActivity {
                             break;
                     }
 
-                    //                Adds event to database and ends activity
-                    saveEvent();
+//                    Checks whether an event with the exact same data already exists
+                    int doesEventExistCheck = MainActivity.eventDatabase.eventDao().getEventID(eventTitle, eventLocation, eventDate, startTime, endTime, alertType);
+//                    Checks whether an event with the exact same data but with null date value
+                    int doesEventExistNullDateCheck = MainActivity.eventDatabase.eventDao().checkNullDate(eventTitle, eventLocation,startTime, endTime, alertType);
+//                    If event already exists as entered, raise error saying event already exists
+                    if (doesEventExistCheck != 0) {
+                        Toast.makeText(getApplicationContext(),
+                                "Event already exists at that time",
+                                Toast.LENGTH_SHORT)
+                                .show();
+//                        If Event exists but with null date entry, update date entry to selected date
+                    } else if (doesEventExistNullDateCheck != 0) {
+                        MainActivity.eventDatabase.eventDao().update(doesEventExistNullDateCheck, eventTitle, eventLocation, eventDate, startTime, endTime, alertType, saveTemplateToggleState);
 
-                    finish();
+                        finish();
+                    } else {
+//                        Saves Event to DB
+                        saveEvent();
+                        finish();
+                    }
+
                 }
             }
         });
