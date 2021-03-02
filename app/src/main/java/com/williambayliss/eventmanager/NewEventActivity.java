@@ -109,8 +109,6 @@ public class NewEventActivity extends AppCompatActivity {
                             selectedHour,
                             selectedMinute)), hour, minute, true);
             timePickerDialog.setTitle("Select Start Time");
-            timePickerDialog
-                    .getWindow();
             timePickerDialog.show();
         });
 
@@ -134,8 +132,6 @@ public class NewEventActivity extends AppCompatActivity {
                     minute,
                     true);
             timePickerDialog.setTitle("Select End Time");
-            timePickerDialog
-                    .getWindow();
             timePickerDialog.show();
         });
 

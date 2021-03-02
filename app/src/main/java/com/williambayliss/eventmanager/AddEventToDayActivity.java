@@ -83,8 +83,6 @@ public class AddEventToDayActivity extends NewEventActivity {
                                 minute,
                                 true);
                         timePickerDialog.setTitle("Select Start Time");
-                        timePickerDialog
-                                .getWindow();
                         timePickerDialog.show();
                     });
 
@@ -110,9 +108,6 @@ public class AddEventToDayActivity extends NewEventActivity {
                                 minute,
                                 true);
                         timePickerDialog.setTitle("Select End Time");
-
-                        timePickerDialog
-                                .getWindow();
                         timePickerDialog.show();
                     });
 
