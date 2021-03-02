@@ -375,12 +375,15 @@ public class AddEventToDayActivity extends NewEventActivity {
         if (requestCode == 1)
             if (resultCode == Activity.RESULT_OK) {
                 assert data != null;
-                eventTitleEditText.setText(data.getStringExtra("TemplateTitle"));
-                eventLocationEditText.setText(data.getStringExtra("TemplateLocation"));
-                startTimeTextView.setText(data.getStringExtra("TemplateStartTime"));
-                endTimeTextView.setText(data.getStringExtra("TemplateEndTime"));
+                eventTitleEditText.setText(
+                        data.getStringExtra("TemplateTitle"));
+                eventLocationEditText.setText(
+                        data.getStringExtra("TemplateLocation"));
+                startTimeTextView.setText(
+                        data.getStringExtra("TemplateStartTime"));
+                endTimeTextView.setText(
+                        data.getStringExtra("TemplateEndTime"));
                 alertType = data.getStringExtra("TemplateAlertType");
-                Log.e("Error", "Template Title: " + data.getStringExtra("TemplateTitle"));
             }
     }
 

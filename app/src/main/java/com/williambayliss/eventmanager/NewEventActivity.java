@@ -393,14 +393,20 @@ public class NewEventActivity extends AppCompatActivity {
 //                into textViews and variables
                 assert data != null;
                 eventTitleEditText.setText(
-                        data.getStringExtra("TemplateTitle"));
+                        data.getStringExtra("TemplateTitle")
+                );
                 eventLocationEditText.setText(
-                        data.getStringExtra("TemplateLocation"));
+                        data.getStringExtra("TemplateLocation")
+                );
                 startTimeTextView.setText(
-                        data.getStringExtra("TemplateStartTime"));
+                        data.getStringExtra("TemplateStartTime")
+                );
                 endTimeTextView.setText(
-                        data.getStringExtra("TemplateEndTime"));
-                alertType = data.getStringExtra("TemplateAlertType");
+                        data.getStringExtra("TemplateEndTime")
+                );
+                alertType = data.getStringExtra(
+                            "TemplateAlertType"
+                );
             }
     }
 
