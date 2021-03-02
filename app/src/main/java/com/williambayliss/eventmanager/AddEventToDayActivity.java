@@ -73,7 +73,6 @@ public class AddEventToDayActivity extends NewEventActivity {
                         TimePickerDialog timePickerDialog;
                         timePickerDialog = new TimePickerDialog(
                                 AddEventToDayActivity.this,
-                                android.R.style.Theme_Holo_Dialog_NoActionBar,
                                 (timePicker, selectedHour, selectedMinute) ->
                                         startTimeTextView.setText(
                                                 String.format(Locale.CANADA,
@@ -85,9 +84,7 @@ public class AddEventToDayActivity extends NewEventActivity {
                                 true);
                         timePickerDialog.setTitle("Select Start Time");
                         timePickerDialog
-                                .getWindow()
-                                .setBackgroundDrawableResource(
-                                        android.R.color.transparent);
+                                .getWindow();
                         timePickerDialog.show();
                     });
 
@@ -102,7 +99,6 @@ public class AddEventToDayActivity extends NewEventActivity {
                         TimePickerDialog timePickerDialog;
                         timePickerDialog = new TimePickerDialog(
                                 AddEventToDayActivity.this,
-                                android.R.style.Theme_Holo_Dialog_NoActionBar,
                                 (timePicker, selectedHour, selectedMinute) ->
                                         endTimeTextView.setText(
                                                 String.format(
@@ -116,10 +112,7 @@ public class AddEventToDayActivity extends NewEventActivity {
                         timePickerDialog.setTitle("Select End Time");
 
                         timePickerDialog
-                                .getWindow()
-                                .setBackgroundDrawableResource(
-                                        android.R.color.transparent);
-
+                                .getWindow();
                         timePickerDialog.show();
                     });
 

@@ -53,7 +53,16 @@ public class LoadTemplateActivity extends AppCompatActivity {
 //            updates recyclerView
             int position = viewHolder.getAdapterPosition();
             int id = loadTemplateAdapter.getItemID(position);
-            MainActivity.eventDatabase.eventDao().delete(id);
+//            Checks whether event date has been set to NULL in DB
+            String eventDeletedCheck = MainActivity.eventDatabase.eventDao().getEventDate(id);
+            if (eventDeletedCheck == null ) {
+//                If yes, deletes event on template deletion
+                MainActivity.eventDatabase.eventDao().delete(id);
+            } else {
+//                Else, sets template value to false in DB
+                MainActivity.eventDatabase.eventDao().toggleTemplate(id);
+            }
+//            Updates recyclerView
             loadTemplateAdapter.updateTemplates();
             loadTemplateAdapter.notifyDataSetChanged();
         }

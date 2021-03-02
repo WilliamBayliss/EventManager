@@ -101,7 +101,6 @@ public class NewEventActivity extends AppCompatActivity {
             TimePickerDialog timePickerDialog;
             timePickerDialog = new TimePickerDialog(
                     NewEventActivity.this,
-                    android.R.style.Theme_Holo_Dialog_NoActionBar,
                     (timePicker, selectedHour, selectedMinute) -> startTimeTextView.setText(
                         String.format(
                             Locale.CANADA,
@@ -110,9 +109,7 @@ public class NewEventActivity extends AppCompatActivity {
                             selectedMinute)), hour, minute, true);
             timePickerDialog.setTitle("Select Start Time");
             timePickerDialog
-                    .getWindow()
-                    .setBackgroundDrawableResource(
-                            android.R.color.transparent);
+                    .getWindow();
             timePickerDialog.show();
         });
 
@@ -126,7 +123,6 @@ public class NewEventActivity extends AppCompatActivity {
             TimePickerDialog timePickerDialog;
             timePickerDialog = new TimePickerDialog(
                     NewEventActivity.this,
-                    android.R.style.Theme_Holo_Dialog_NoActionBar,
                     (timePicker, selectedHour, selectedMinute) -> endTimeTextView.setText(
                             String.format(
                                     Locale.CANADA,
@@ -138,9 +134,7 @@ public class NewEventActivity extends AppCompatActivity {
                     true);
             timePickerDialog.setTitle("Select End Time");
             timePickerDialog
-                    .getWindow()
-                    .setBackgroundDrawableResource(
-                            android.R.color.transparent);
+                    .getWindow();
             timePickerDialog.show();
         });
 

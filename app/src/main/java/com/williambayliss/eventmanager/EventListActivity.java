@@ -76,7 +76,16 @@ public class EventListActivity extends AppCompatActivity {
 //           Get id of selected Event from list and delete it from DB
             int position = viewHolder.getAdapterPosition();
             int id = eventListAdapter.getEventID(position);
-            MainActivity.eventDatabase.eventDao().delete(id);
+//            Checks whether event is set as template
+            int templateStatus = MainActivity.eventDatabase.eventDao().getTemplateStatus(id);
+            if (templateStatus == 1) {
+//                If yes, on deletion sets date to null to delete from EventList but save template data
+                MainActivity.eventDatabase.eventDao().deleteEventSaveTemplate(id);
+            }
+            else {
+//                Else, deletes event
+                MainActivity.eventDatabase.eventDao().delete(id);
+            }
 //            Update List of Events, update RecyclerView
             eventListAdapter.updateDayEventList(eventListAdapter.eventList, selectedDate);
             eventListAdapter.notifyDataSetChanged();

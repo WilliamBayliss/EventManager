@@ -27,6 +27,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         public TextView eventStartTimeTextView;
         public TextView eventEndTimeTextView;
         public TextView eventDateTextView;
+        public TextView eventAlertTypeTextView;
 
         EventListViewHolder(View view) {
             super(view);
@@ -37,7 +38,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             eventStartTimeTextView = view.findViewById(R.id.event_start_time_text_view);
             eventEndTimeTextView = view.findViewById(R.id.event_until_time_text_view);
             eventDateTextView = view.findViewById(R.id.event_date_text_view);
-
+            eventAlertTypeTextView = view.findViewById(R.id.event_alert_type_text_view);
             containerView.setOnClickListener(this);
             containerView.setOnLongClickListener(this);
         }
@@ -95,6 +96,7 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         holder.eventDateTextView.setText(currentEvent.date);
         holder.eventStartTimeTextView.setText(currentEvent.startTime);
         holder.eventEndTimeTextView.setText(currentEvent.endTime);
+        holder.eventAlertTypeTextView.setText(currentEvent.alertType);
         holder.containerView.setTag(currentEvent);
 
 //        Sets background color of item depending on alert type
@@ -118,5 +120,10 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
     @Override
     public int getItemCount() {
         return eventList.size();
+    }
+
+    private int getEventId(int position) {
+        Event current = eventList.get(position);
+        return current.id;
     }
 }

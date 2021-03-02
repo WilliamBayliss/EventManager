@@ -13,6 +13,18 @@ public interface EventDao {
     @Query("UPDATE Events SET Title = :title, Location = :location, Date = :date, `Start Time` = :startTime, `End Time` = :endTime, `Alert Type` = :alertType WHERE id = :id")
     void update(int id, String title, String location, String date, String startTime, String endTime, String alertType);
 
+    @Query("SELECT Template FROM Events WHERE id = :id")
+    int getTemplateStatus(int id);
+
+    @Query("UPDATE Events SET template = '0' WHERE id = :id")
+    void toggleTemplate(int id);
+
+    @Query("UPDATE Events SET Date = NULL WHERE id = :id AND Template = '1'")
+    void deleteEventSaveTemplate(int id);
+
+    @Query("SELECT Date FROM Events WHERE id = :id")
+    String getEventDate(int id);
+
     @Query("DELETE FROM Events WHERE id = :id")
     void delete(int id);
 
@@ -24,5 +36,6 @@ public interface EventDao {
 
     @Query("SELECT * FROM Events WHERE Template == '1'")
     List<Event> getAllTemplates();
+
 
 }
