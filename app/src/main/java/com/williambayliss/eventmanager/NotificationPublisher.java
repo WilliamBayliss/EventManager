@@ -22,13 +22,8 @@ public class NotificationPublisher extends BroadcastReceiver {
 //        Checks that os build is >= Oreo
         if (android.os.Build.VERSION. SDK_INT >= android.os.Build.VERSION_CODES.O ) {
             int importance = NotificationManager. IMPORTANCE_HIGH ;
-//            Creates notification channel with ID from NotificationChannelBuilder
-            NotificationChannel notificationChannel =
-                    new NotificationChannel(
-                            NotificationChannelBuilder.CHANNEL_1_ID,
-                            "NOTIFICATION_CHANNEL_NAME",
-                            importance);
-            assert notificationManager != null;
+//            Gets Notification channel from NotificationChannelBuilder
+            NotificationChannel notificationChannel = notificationManager.getNotificationChannel(NotificationChannelBuilder.CHANNEL_1_ID);
             notificationManager.createNotificationChannel(notificationChannel);
         }
 //        Gets id, ensures notification manager not null, sends notify
