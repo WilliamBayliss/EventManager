@@ -7,61 +7,44 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="New Event"
+        android:text="@string/new_event_header"
         android:gravity="center"
         android:textSize="25sp"
         android:paddingTop="25dp"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:orientation="horizontal" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingEnd="40dp"
-            android:layout_weight="0"
-            android:text="Title: "
-            android:textSize="20sp"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="text"
             android:layout_weight="0"
-            android:id="@+id/event_title" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:orientation="horizontal" >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:text="Location: "
-            android:textSize="20sp" />
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:hint="@string/event_title_default_text"
+            android:id="@+id/event_title"
+            android:autofillHints="Event Title" />
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:inputType="text"
             android:layout_weight="0"
-            android:id="@+id/event_location" />
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:orientation="horizontal" >
+            android:hint="@string/event_location_default_text"
+            android:id="@+id/event_location"
+            android:autofillHints="Event Location" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:orientation="horizontal" >
         <Button
             android:layout_width="175dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:id="@+id/date_button"
-            android:text="Set date: " />
+            android:text="@string/new_event_set_date_button_text" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -82,7 +65,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:id="@+id/start_time_button"
-            android:text="Start Time: " />
+            android:text="@string/start_time_button_text" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -103,7 +86,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:id="@+id/end_time_button"
-            android:text="End Time: " />
+            android:text="@string/end_time_button_text" />
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -119,8 +102,9 @@
         android:layout_marginTop="20dp"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
-        android:text="Alert Type"
+        android:text="@string/alert_button_text"
         android:textSize="20sp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +115,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:textSize="20sp"
-            android:text="Save template:" />
+            android:text="@string/template_toggle_text" />
         <ToggleButton
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -146,14 +130,14 @@
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:id="@+id/load_from_template_button"
-        android:text="Load from Templates"
+        android:text="@string/load_template_button_text"
         android:textSize="20sp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        android:text="Add to Calendar"
+        android:text="@string/add_to_calendar_button_text"
         android:id="@+id/add_to_calendar_button"
         android:textSize="20sp"
         android:layout_marginRight="10dp"
