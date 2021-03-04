@@ -18,6 +18,13 @@
 
     <string name="alert_time_declaration">Alert Time:</string>
 
+    <string name="at_time_of_event_popup_menu_item">At time of event</string>
+    <string name="five_minutes_before_popup_menu_item">Five minutes before event</string>
+    <string name="thirty_minutes_before_popup_menu_item">Thirty minutes before event</string>
+    <string name="one_hour_before_popup_menu_item">One hour before event</string>
+    <string name="one_day_before_popup_menu_item">One day before event</string>
+    <string name="one_week_before_popup_menu_item">One week before event</string>
+
     <string name="floating_action_button_content_description">Launches Activity</string>
 
 </resources>
