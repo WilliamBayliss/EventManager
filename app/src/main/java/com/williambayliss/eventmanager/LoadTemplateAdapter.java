@@ -89,7 +89,7 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
     @Override
     public LoadTemplateAdapter.LoadTemplateViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.template_row, parent, false);
+                        .inflate(R.layout.template_row, parent, false);
         return new LoadTemplateViewHolder(view);
     }
 

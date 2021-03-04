@@ -21,7 +21,7 @@
         </activity>
         <activity android:name=".EventListActivity"/>
         <activity android:name=".AddEventToDayActivity"/>
-        <activity android:name=".LoadTemplateActivity"/>    
+        <activity android:name=".LoadTemplateActivity"/>
         <receiver android:name=".NotificationPublisher"/>
     </application>
 

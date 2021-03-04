@@ -71,7 +71,7 @@ public class AddEventToDayActivity extends NewEventActivity {
 
                         TimePickerDialog timePickerDialog;
                         timePickerDialog = new TimePickerDialog(
-                                AddEventToDayActivity.this,
+                                this,
                                 (timePicker, selectedHour, selectedMinute) ->
                                         startTimeTextView.setText(
                                                 String.format(Locale.CANADA,
@@ -95,7 +95,7 @@ public class AddEventToDayActivity extends NewEventActivity {
 
                         TimePickerDialog timePickerDialog;
                         timePickerDialog = new TimePickerDialog(
-                                AddEventToDayActivity.this,
+                                this,
                                 (timePicker, selectedHour, selectedMinute) ->
                                         endTimeTextView.setText(
                                                 String.format(

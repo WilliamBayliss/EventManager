@@ -1,14 +1,18 @@
     package com.williambayliss.eventmanager;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,7 +24,7 @@ import java.util.List;
 
 
 public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.EventListViewHolder> {
-    public static class EventListViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, View.OnLongClickListener{
+    public static class EventListViewHolder extends RecyclerView.ViewHolder{
         public LinearLayout containerView;
         public TextView eventTitleTextView;
         public TextView eventLocationTextView;
@@ -39,19 +43,9 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
             eventEndTimeTextView = view.findViewById(R.id.event_until_time_text_view);
             eventDateTextView = view.findViewById(R.id.event_date_text_view);
             eventAlertTypeTextView = view.findViewById(R.id.event_alert_type_text_view);
-            containerView.setOnClickListener(this);
-            containerView.setOnLongClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
 
-        }
-
-        @Override
-        public boolean onLongClick(View v) {
-            return false;
-        }
     }
 //    List of Events
     public List<Event> eventList = new ArrayList<>();
