@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:id="@+id/template_title_text_view"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="Event Title" />
 
     </LinearLayout>
@@ -36,7 +36,7 @@
             android:layout_marginTop="20dp"
             android:id="@+id/template_location_text_view"
             android:text="Event Location"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="30dp"
                 android:id="@+id/template_start_time_text_view"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="From" />
 
             <TextView
@@ -56,7 +56,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/template_time_separator_text_view"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="-" />
             <TextView
                 android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/template_until_time_text_view"
-                android:textSize="20dp"
+                android:textSize="20sp"
                 android:text="Until" />
         </LinearLayout>
     </LinearLayout>
@@ -74,7 +74,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:textSize="20dp"
+            android:textSize="20sp"
             android:text="Alert: "
             android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"/>
@@ -85,7 +85,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="20dp"
-            android:textSize="20dp"/>
+            android:textSize="20sp"/>
 
     </LinearLayout>
 </LinearLayout>

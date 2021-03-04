@@ -20,14 +20,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:id="@+id/event_title_text_view"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="Event Title" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:id="@+id/event_date_text_view"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:text="Event Date"/>
 
     </LinearLayout>
@@ -43,7 +43,7 @@
                 android:layout_marginTop="20dp"
                 android:id="@+id/event_location_text_view"
                 android:text="Event Location"
-                android:textSize="18dp"/>
+                android:textSize="18sp"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -54,7 +54,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="30dp"
                 android:id="@+id/event_start_time_text_view"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:text="From" />
 
             <TextView
@@ -63,7 +63,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/event_time_separator_text_view"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:text="-" />
             <TextView
                 android:layout_width="wrap_content"
@@ -71,7 +71,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/event_until_time_text_view"
-                android:textSize="18dp"
+                android:textSize="18sp"
                 android:text="Until" />
         </LinearLayout>
     </LinearLayout>
@@ -83,5 +83,5 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:textSize="20dp"/>
+        android:textSize="20sp"/>
 </LinearLayout>
