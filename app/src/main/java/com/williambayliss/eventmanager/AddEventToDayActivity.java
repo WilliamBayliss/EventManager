@@ -47,7 +47,7 @@ public class AddEventToDayActivity extends NewEventActivity {
         eventTitleEditText = findViewById(R.id.event_title);
         eventLocationEditText = findViewById(R.id.event_location);
         Button setDateButton = findViewById(R.id.date_button);
-        setDateButton.setText("Date: ");
+        setDateButton.setText(getString(R.string.add_event_date_button_text));
         setDateButton.setClickable(false);
         setDateButton.setFocusable(false);
         setDateTextView = findViewById(R.id.set_date_text_view);

@@ -19,6 +19,7 @@
         android:layout_gravity="bottom|start"
         android:layout_marginStart="30dp"
         android:layout_marginBottom="30dp"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        app:srcCompat="@android:drawable/ic_input_add"
+        android:contentDescription="@string/floating_action_button_content_description" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

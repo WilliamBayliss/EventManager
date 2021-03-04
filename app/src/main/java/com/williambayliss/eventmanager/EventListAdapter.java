@@ -1,20 +1,11 @@
     package com.williambayliss.eventmanager;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -90,24 +81,33 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         holder.eventDateTextView.setText(currentEvent.date);
         holder.eventStartTimeTextView.setText(currentEvent.startTime);
         holder.eventEndTimeTextView.setText(currentEvent.endTime);
-        holder.eventAlertTypeTextView.setText(currentEvent.alertType);
+        String alertTypeStringText = holder.itemView.getContext().getString( R.string.alert_time_declaration) + " " +currentEvent.alertType;
+        holder.eventAlertTypeTextView.setText(alertTypeStringText);
         holder.containerView.setTag(currentEvent);
 
 //        Sets background color of item depending on alert type
-        if (currentEvent.alertType.equals("At time of event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#FF0000"));
-        } else if (currentEvent.alertType.equals("Five minutes before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#FF8A00"));
-        } else if (currentEvent.alertType.equals("Thirty minutes before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#1EDA00"));
-        } else if (currentEvent.alertType.equals("One hour before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#0098DA"));
-        } else if (currentEvent.alertType.equals("One day before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#9700FF"));
-        } else if (currentEvent.alertType.equals("One week before event")) {
-            holder.containerView.setBackgroundColor(Color.parseColor("#FF00E8"));
-        } else {
-            holder.containerView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+        switch (currentEvent.alertType) {
+            case "At time of event":
+                holder.containerView.setBackgroundColor(Color.parseColor("#FF0000"));
+                break;
+            case "Five minutes before event":
+                holder.containerView.setBackgroundColor(Color.parseColor("#FF8A00"));
+                break;
+            case "Thirty minutes before event":
+                holder.containerView.setBackgroundColor(Color.parseColor("#1EDA00"));
+                break;
+            case "One hour before event":
+                holder.containerView.setBackgroundColor(Color.parseColor("#0098DA"));
+                break;
+            case "One day before event":
+                holder.containerView.setBackgroundColor(Color.parseColor("#9700FF"));
+                break;
+            case "One week before event":
+                holder.containerView.setBackgroundColor(Color.parseColor("#FF00E8"));
+                break;
+            default:
+                holder.containerView.setBackgroundColor(Color.parseColor("#FFFFFF"));
+                break;
         }
     }
 
@@ -116,8 +116,4 @@ public class EventListAdapter extends RecyclerView.Adapter<EventListAdapter.Even
         return eventList.size();
     }
 
-    private int getEventId(int position) {
-        Event current = eventList.get(position);
-        return current.id;
-    }
 }

@@ -20,15 +20,13 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:id="@+id/event_title_text_view"
-            android:textSize="18sp"
-            android:text="Event Title" />
+            android:textSize="18sp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:id="@+id/event_date_text_view"
-            android:textSize="18sp"
-            android:text="Event Date"/>
+            android:textSize="18sp"/>
 
     </LinearLayout>
 
@@ -42,7 +40,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:id="@+id/event_location_text_view"
-                android:text="Event Location"
                 android:textSize="18sp"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -54,8 +51,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="30dp"
                 android:id="@+id/event_start_time_text_view"
-                android:textSize="18sp"
-                android:text="From" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -64,15 +60,14 @@
                 android:layout_marginStart="10dp"
                 android:id="@+id/event_time_separator_text_view"
                 android:textSize="18sp"
-                android:text="-" />
+                android:text="@string/time_dash_separator" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:layout_marginStart="10dp"
                 android:id="@+id/event_until_time_text_view"
-                android:textSize="18sp"
-                android:text="Until" />
+                android:textSize="18sp" />
         </LinearLayout>
     </LinearLayout>
 
