@@ -102,8 +102,8 @@ public class LoadTemplateAdapter extends RecyclerView.Adapter<LoadTemplateAdapte
         holder.templateLocationTextView.setText(currentTemplate.location);
         holder.templateStartTimeTextView.setText(currentTemplate.startTime);
         holder.templateEndTimeTextView.setText(currentTemplate.endTime);
-        holder.templateAlertTypeTextView.setText(currentTemplate.alertType);
-
+        String alertTypeStringText = holder.itemView.getContext().getString( R.string.alert_time_declaration) + " " + currentTemplate.alertType;
+        holder.templateAlertTypeTextView.setText(alertTypeStringText);
         holder.containerView.setTag(currentTemplate);
         //        Sets background color of item depending on alert type
         switch (currentTemplate.alertType) {

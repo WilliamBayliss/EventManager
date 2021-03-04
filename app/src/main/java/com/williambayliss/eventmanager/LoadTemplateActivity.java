@@ -1,21 +1,15 @@
 package com.williambayliss.eventmanager;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class LoadTemplateActivity extends AppCompatActivity {
-    private RecyclerView recyclerView;
     RecyclerView.LayoutManager layoutManager;
     LoadTemplateAdapter loadTemplateAdapter;
 
@@ -26,7 +20,7 @@ public class LoadTemplateActivity extends AppCompatActivity {
         setContentView(R.layout.load_template_activity);
 
 //        Create recyclerView and layout manager
-        recyclerView = findViewById(R.id.template_list_recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.template_list_recycler_view);
         loadTemplateAdapter = new LoadTemplateAdapter();
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setAdapter(loadTemplateAdapter);

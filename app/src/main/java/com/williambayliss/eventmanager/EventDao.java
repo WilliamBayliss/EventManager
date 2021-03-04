@@ -34,8 +34,6 @@ public interface EventDao {
     @Query("SELECT * FROM Events WHERE Date = :date ORDER BY `Start Time` ASC")
     List<Event> getDaysEvents(String date);
 
-    @Query("SELECT * FROM Events ORDER BY `Start Time` ASC")
-    List<Event> getAllEvents();
 
     @Query("SELECT * FROM Events WHERE Template == '1'")
     List<Event> getAllTemplates();

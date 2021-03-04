@@ -6,7 +6,6 @@ import android.app.NotificationManager;
 import android.os.Build;
 import android.util.Log;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 public class NotificationChannelBuilder extends Application {
     public static final String CHANNEL_1_ID = "EventNotificationChannel";

@@ -286,15 +286,9 @@ public class AddEventToDayActivity extends NewEventActivity {
 //                        If Event exists but with null date entry, update date entry to selected date
                     } else if (doesEventExistNullDateCheck != 0) {
                         MainActivity.eventDatabase.eventDao()
-                                .update(
+                                .updateEventDate(
                                         doesEventExistNullDateCheck,
-                                        eventTitle,
-                                        eventLocation,
-                                        eventDate,
-                                        startTime,
-                                        endTime,
-                                        alertType,
-                                        saveTemplateToggleState);
+                                        eventDate);
 
                         finish();
                     } else if (duplicateTemplateCheck == 1) {
