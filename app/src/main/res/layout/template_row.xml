@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:id="@+id/template_row"
     android:padding="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginTop="10dp"
     android:clickable="true"
     android:focusable="true"
@@ -18,7 +18,7 @@
         <TextView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:id="@+id/template_title_text_view"
             android:textSize="18dp"
             android:text="Event Title" />
@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp">
+        android:layout_marginStart="10dp">
         <TextView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:id="@+id/template_start_time_text_view"
                 android:textSize="20dp"
                 android:text="From" />
@@ -54,7 +54,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:id="@+id/template_time_separator_text_view"
                 android:textSize="20dp"
                 android:text="-" />
@@ -62,7 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:id="@+id/template_until_time_text_view"
                 android:textSize="20dp"
                 android:text="Until" />
@@ -76,7 +76,7 @@
             android:layout_height="match_parent"
             android:textSize="20dp"
             android:text="Alert: "
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:layout_marginTop="20dp"/>
         <TextView
             android:layout_width="match_parent"

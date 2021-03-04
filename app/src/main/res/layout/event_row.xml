@@ -5,8 +5,8 @@
     android:layout_height="wrap_content"
     android:id="@+id/event_row"
     android:padding="10dp"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:layout_marginTop="10dp"
     android:clickable="true"
     android:focusable="true"
@@ -18,14 +18,14 @@
         <TextView
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             android:id="@+id/event_title_text_view"
             android:textSize="18dp"
             android:text="Event Title" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
             android:id="@+id/event_date_text_view"
             android:textSize="18dp"
             android:text="Event Date"/>
@@ -36,7 +36,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginLeft="10dp">
+        android:layout_marginStart="10dp">
             <TextView
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp"
                 android:id="@+id/event_start_time_text_view"
                 android:textSize="18dp"
                 android:text="From" />
@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:id="@+id/event_time_separator_text_view"
                 android:textSize="18dp"
                 android:text="-" />
@@ -69,7 +69,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:id="@+id/event_until_time_text_view"
                 android:textSize="18dp"
                 android:text="Until" />
@@ -80,8 +80,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/event_alert_type_text_view"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
         android:textSize="20dp"/>
 </LinearLayout>
